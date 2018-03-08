@@ -10,8 +10,6 @@
 
 using namespace std;
 int main(){
-	cout << "124";
-	cin.get();
 	
 
 
