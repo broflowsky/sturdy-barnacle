@@ -6,9 +6,13 @@
  */
 
 #include "Graph.h"
+#include <iostream>
 
+using namespace std;
 int main(){
-
+	cout << "124";
+	cin.get();
+	
 
 
 	return 0;
