@@ -10,11 +10,17 @@
 
 #include "Vertex.h"
 #include "Edge.h"
+#include <list>
 #include <string>
 using namespace std;
 
 class Graph
 {
+protected:
+
+	list<Vertex> listVertex;
+	list<Edge> listEdge;
+
 	public:
 		Graph();
 		virtual ~Graph();

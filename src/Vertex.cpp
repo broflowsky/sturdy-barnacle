@@ -7,8 +7,9 @@
 
 #include "Vertex.h"
 
-Vertex::Vertex() {
-	// NOTE Auto-generated constructor stub
+Vertex::Vertex(int value, int id){
+	this->value=value;
+	this->id=id;
 
 }
 

@@ -6,9 +6,12 @@
  */
 
 #include "Edge.h"
+#include "Vertex.h"
 
-Edge::Edge() {
-	// NOTE Auto-generated constructor stub
+Edge::Edge(int weight, Vertex *vertexStart, Vertex *vertexEnd){
+	this->weight = weight;
+	this->vertexStart = vertexStart;
+	this->vertexEnd=vertexEnd;
 
 }
 
