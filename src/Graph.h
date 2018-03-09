@@ -25,6 +25,12 @@ protected:
 		Graph();
 		virtual ~Graph();
 
+
+
+		/////////////////////////////////////////
+		virtual bool link(const Vertex& start, const Vertex& end) = 0;
+
+
 		//adds one vertex; returns bool if added successfully.
 		virtual bool addVertex(Vertex& v)=0;
 		//Bonus question: adds in a set of vertices; returns bool if added
