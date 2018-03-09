@@ -143,6 +143,32 @@
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="005788a4-e2f4-49b3-98c8-f7cb6a7c5472"
+            name="list&lt;Edge&gt;"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="78570bfd-f6a6-447b-9e5e-41d493f111b2"
+            name="list&lt;Vertex&gt;"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
             Id="da98a063-5792-4940-b244-fe3016fba501"
@@ -208,7 +234,7 @@
           </operation>
           <operation
             Id="c9fde09b-a9aa-46c6-8382-4c08c984b2d6"
-            name="virtual bool eddEdge"
+            name="virtual bool addEdge"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -217,7 +243,7 @@
             <ownedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="9316b820-fcf2-4f9a-a9dc-b84fee0f8d90"
+                  Id="9a4a0e7c-5a67-46f9-af65-9fce4e5f8c33"
                   name="Edge&amp; e"
                   direction="In"
                   isUnique="false" />
@@ -325,6 +351,31 @@
                 <parameter
                   Id="f2bc672e-0196-45bd-a0b2-e2dd1be0b4db"
                   name="Edge&amp; e"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="32133508-74c6-493a-8e91-c42b69e361d6"
+            name="virtual bool link"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="9e480251-0bc3-4a1c-b559-7ffb3d364971"
+                  name="vertex&amp;"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="d922a421-023a-42f2-9aad-0232980be570"
+                  name="vertex&amp;"
                   direction="In"
                   isUnique="false" />
               </operationHasOwnedParameters>
@@ -440,24 +491,6 @@
               <operationHasOwnedParameters>
                 <parameter
                   Id="988d82fb-0d5c-47f3-aa51-e8079fdc486a"
-                  name="Edge&amp; e"
-                  direction="In"
-                  isUnique="false" />
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="82f94de9-7b3f-4378-a8da-8728ce0d27fd"
-            name="virtual bool eddEdge"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="d93d3b1b-60c9-469f-8b91-383156c543e6"
                   name="Edge&amp; e"
                   direction="In"
                   isUnique="false" />
@@ -637,24 +670,6 @@
             </ownedParameters>
           </operation>
           <operation
-            Id="22cb814e-f5be-488f-92f1-c3cac23aaa82"
-            name="virtual bool eddEdge"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="38e0c477-ba4f-4e03-a24f-17cdfb74636a"
-                  name="Edge&amp; e"
-                  direction="In"
-                  isUnique="false" />
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
             Id="e7fd1cbc-33a8-411e-b05c-fa7ddad10a14"
             name="virtual bool remove"
             isLeaf="false"
@@ -763,11 +778,11 @@
         </suppliersInternal>
         <generalsInternal>
           <generalization
-            Id="7ca28987-b95e-4035-b7e1-b89b6e4448f6"
+            Id="77e4476a-ccf0-49ef-97e9-f46b511a3689"
             isSubstitutable="false">
             <classMoniker
-              Id="078ab199-683e-414f-820c-55c7e7bdf126"
-              LastKnownName="Graph"
+              Id="b47462e9-cd61-4ffd-ba91-08165495b4e6"
+              LastKnownName="GraphDirected"
               LastKnownLocation="ModelingProject1.uml" />
           </generalization>
         </generalsInternal>
@@ -820,24 +835,6 @@
               <operationHasOwnedParameters>
                 <parameter
                   Id="65c41987-5ea0-4e2b-83e4-527db3bd064d"
-                  name="Edge&amp; e"
-                  direction="In"
-                  isUnique="false" />
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="c54462f5-eaf6-43bf-af2f-bebe96944c56"
-            name="virtual bool eddEdge"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="fccc3097-6a7f-4981-bd5d-9d163070c458"
                   name="Edge&amp; e"
                   direction="In"
                   isUnique="false" />
