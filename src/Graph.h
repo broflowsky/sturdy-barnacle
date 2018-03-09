@@ -54,8 +54,8 @@ protected:
 		//README cannot have two overload with the same parameters
 		//here we could not have Vertex search(int) and Edge search(int)
 		// so instead we should do has you said, hence those two functions
-		virtual Vertex* search(int id,Vertex&) = 0;
-		virtual Edge* search(int weight,Edge&) = 0;
+		virtual bool search(int id,Vertex&) = 0;
+		virtual bool search(int weight,Edge&) = 0;
 
 
 
