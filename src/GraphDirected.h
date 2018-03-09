@@ -19,7 +19,7 @@ public:
 
 
 	//
-	virtual bool link(const Vertex& start, const Vertex& end);
+	virtual Edge& link( Vertex& start,  Vertex& end);
 
 	//adds one vertex; returns bool if added successfully.
 	virtual bool add(Vertex& v);
@@ -45,8 +45,8 @@ public:
 	// displays the path that contains the vertex.
 
 
-	virtual Vertex* search(int id,Vertex&);
-	virtual Edge* search(int weight,Edge&);
+	virtual bool search(int value,Vertex&);
+	virtual bool search(int weight,Edge&);
 
 
 	virtual void display(Vertex& v) const;

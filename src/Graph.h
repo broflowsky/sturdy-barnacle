@@ -28,7 +28,7 @@ protected:
 
 
 		/////////////////////////////////////////
-		virtual bool link(const Vertex& start, const Vertex& end) = 0;
+		virtual Edge& link( Vertex& start,  Vertex& end) = 0;
 
 
 		//adds one vertex; returns bool if added successfully.
