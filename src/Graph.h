@@ -32,24 +32,31 @@ protected:
 
 
 		//adds one vertex; returns bool if added successfully.
-		virtual bool addVertex(Vertex& v)=0;
+		virtual bool add(Vertex& v)=0;
 		//Bonus question: adds in a set of vertices; returns bool if added
 		 //successfully
 		//virtual bool addVertices(Vertex* vArray) = 0;
 		//removes a vertex; the edges that have connection with this vertex need to
 		 //be removed;
-		virtual bool removeVertex(Vertex& v) = 0;
+		virtual bool remove(Vertex& v) = 0;
 		//adds an edge; returns true if the edge is added successfully.
-		virtual bool addEdge(Edge& e) = 0;
+		virtual bool add(Edge& e) = 0;
 		//Bonus question: removes a set of edges; as a result, some nodes may remain
 		 //as orphan.
 		//virtual bool addEdges(Edge* eArray) = 0;
 		// remove the edge
 		virtual bool remove(Edge& e) = 0;
 		// returns bool if a vertex exists in a graph.
-		virtual bool searchVertex(const Vertex& v) = 0;
+		virtual bool search(const Vertex& v) = 0;
 		// returns bool if an Edge exists in a graph.
-		virtual bool searchEdge(const Edge& e) = 0;
+		virtual bool search(const Edge& e) = 0;
+
+
+		virtual Vertex* search(int id) = 0;
+		virtual Edge* search(int weight) = 0;
+
+
+
 		// displays the path that contains the vertex.
 		virtual void display(Vertex& v) const = 0;
 		// displays the path that contains the edge.

@@ -18,4 +18,6 @@ Edge::Edge(int weight, Vertex *vertexStart, Vertex *vertexEnd){
 Edge::~Edge() {
 	// NOTE Auto-generated destructor stub
 }
-
+int Edge::getWeiht(){
+	return weight;
+}

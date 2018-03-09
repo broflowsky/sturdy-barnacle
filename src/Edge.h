@@ -18,12 +18,8 @@ class Edge {
 public:
 	Edge(int = 0, Vertex *start = nullptr, Vertex *end = nullptr);
 	virtual ~Edge();
-
-	bool link(const Vertex& start, const Vertex& end);
+	int getWeiht();
 };
 
 #endif /* EDGE_H_ */
-/*NOTE functions that we will need
-	 * link(const Vertex&)
-	 *
-	 * */
+
