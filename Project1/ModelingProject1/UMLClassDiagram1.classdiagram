@@ -1,19 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="194d4638-1445-4651-8389-1c163c9acf44" name="UMLClassDiagram1" linkedPackageId="5c293a91-ce2d-46cf-93df-8cffef2677c5" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
-  <profileInstances>
-    <packageHasProfileInstances Id="835ee1e0-2b4b-45dd-b953-71d6ead1b39e">
-      <profileInstance Id="b9a5fc23-7ab5-4be2-bf5f-60136ca864d0" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
-      </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="65e216bf-9a68-4014-8e28-4ea03af4dbb6">
-      <profileInstance Id="d03ecf32-7851-4f18-8b03-745c16064515" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-  </profileInstances>
   <packagedElements>
     <logicalClassDesignerModelHasTypes>
       <class Id="82e9be85-806a-4ff0-a4b3-c9709fe9daf4" name="Edge" isAbstract="false" isLeaf="false" isActiveClass="false">
@@ -63,6 +49,14 @@
     <logicalClassDesignerModelHasTypes>
       <class Id="bfe86c2a-a1db-415f-8a14-489fee7d7539" name="Graph" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="078ab199-683e-414f-820c-55c7e7bdf126" />
+        <ownedAttributesInternal>
+          <property Id="7bdca9d9-df04-48b5-9f7e-ee4f8c565073" name="list&lt;Edge&gt;" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="005788a4-e2f4-49b3-98c8-f7cb6a7c5472" />
+          </property>
+          <property Id="8045ec05-27e1-4f1f-bf69-ea8b1c8f2109" name="list&lt;Vertex&gt;" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="78570bfd-f6a6-447b-9e5e-41d493f111b2" />
+          </property>
+        </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation Id="a74ee02d-9936-4e9a-84fe-d60f2e14e9d6" name="Graph" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="da98a063-5792-4940-b244-fe3016fba501" />
@@ -97,12 +91,12 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="e54b3863-24a8-4cb4-80b2-7ded9e508cab" name="virtual bool eddEdge" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+          <operation Id="e54b3863-24a8-4cb4-80b2-7ded9e508cab" name="virtual bool addEdge" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="c9fde09b-a9aa-46c6-8382-4c08c984b2d6" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="fd85cf49-820a-4296-b635-9242571d6154" name="Edge&amp; e" direction="In" isUnique="false">
-                  <elementDefinition Id="9316b820-fcf2-4f9a-a9dc-b84fee0f8d90" />
+                <parameter Id="036d9b64-d5a9-4c82-afc8-4b3eba8e3e43" name="Edge&amp; e" direction="In" isUnique="false">
+                  <elementDefinition Id="9a4a0e7c-5a67-46f9-af65-9fce4e5f8c33" />
                 </parameter>
               </operationHasOwnedParameters>
             </ownedParameters>
@@ -163,31 +157,27 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation Id="cd4893cd-5afa-4e1b-9542-986f37c376be" name="virtual bool link" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="32133508-74c6-493a-8e91-c42b69e361d6" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="66ff8628-1985-4284-b9f5-23e0707aa33b" name="vertex&amp;" direction="In" isUnique="false">
+                  <elementDefinition Id="9e480251-0bc3-4a1c-b559-7ffb3d364971" />
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="34aa952b-819a-4bae-bcb2-295ffca08980" name="vertex&amp;" direction="In" isUnique="false">
+                  <elementDefinition Id="d922a421-023a-42f2-9aad-0232980be570" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <Interface Id="42a0d606-58d5-4774-b6b7-008b1296700d" name="Lists" isAbstract="false" isLeaf="false">
-        <elementDefinition Id="a23c8937-4583-476f-b7e3-f3f3b69a9686" />
-        <ownedAttributes>
-          <property Id="293496e5-fa72-4e52-b2f8-801baa160f1d" name="list&lt;Edge&gt;" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="b7788992-8f02-47a5-acc6-287976272266" />
-          </property>
-          <property Id="aea19ead-a2d7-4bb4-b3d8-6dd077e74f78" name="list&lt;Vertex&gt;" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="531dc9f2-eb3d-48a2-9209-d3c7bdc86a21" />
-          </property>
-        </ownedAttributes>
-      </Interface>
-    </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
       <class Id="146faf8c-4d6a-4421-8b36-f423606df688" name="GraphDirected" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="b47462e9-cd61-4ffd-ba91-08165495b4e6" />
-        <suppliersInternal>
-          <interfaceRealization Id="a4a11c50-a196-411c-8d1b-4432431378dc">
-            <interfaceMoniker Id="42a0d606-58d5-4774-b6b7-008b1296700d" LastKnownName="Lists" />
-            <elementDefinition Id="14033009-8aab-4ed8-b036-03db690bd8d8" />
-          </interfaceRealization>
-        </suppliersInternal>
         <generalsInternal>
           <generalization Id="c5129ccf-9254-4da1-8164-7a1b714d6121" isSubstitutable="false">
             <classMoniker Id="bfe86c2a-a1db-415f-8a14-489fee7d7539" LastKnownName="Graph" />
@@ -221,16 +211,6 @@
               <operationHasOwnedParameters>
                 <parameter Id="7e6a6056-c9c2-4098-9932-36b1e9be665c" name="Edge&amp; e" direction="In" isUnique="false">
                   <elementDefinition Id="988d82fb-0d5c-47f3-aa51-e8079fdc486a" />
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation Id="59d48c2e-03aa-40b4-a8aa-410370c5e14c" name="virtual bool eddEdge" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="82f94de9-7b3f-4378-a8da-8728ce0d27fd" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="27e7a280-f29d-453d-b9f5-d0451e3e076d" name="Edge&amp; e" direction="In" isUnique="false">
-                  <elementDefinition Id="d93d3b1b-60c9-469f-8b91-383156c543e6" />
                 </parameter>
               </operationHasOwnedParameters>
             </ownedParameters>
@@ -287,12 +267,6 @@
     <logicalClassDesignerModelHasTypes>
       <class Id="9f5eaec7-ff0f-414c-afdd-0a8d1ba31416" name="GraphUndirected" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="adb8f216-610d-48c9-ae5b-b0aefcc7b0ac" />
-        <suppliersInternal>
-          <interfaceRealization Id="b6d9bc94-d073-46df-8030-e856895feae6">
-            <interfaceMoniker Id="42a0d606-58d5-4774-b6b7-008b1296700d" LastKnownName="Lists" />
-            <elementDefinition Id="f7c68a3e-0383-478e-b4e7-1a198e25d521" />
-          </interfaceRealization>
-        </suppliersInternal>
         <generalsInternal>
           <generalization Id="7342b3f9-78e8-4c03-b8c9-9edc0055f1d7" isSubstitutable="false">
             <classMoniker Id="bfe86c2a-a1db-415f-8a14-489fee7d7539" LastKnownName="Graph" />
@@ -326,16 +300,6 @@
               <operationHasOwnedParameters>
                 <parameter Id="f04ec0d6-72d9-4073-9afa-6b62506dc922" name="Edge&amp; e" direction="In" isUnique="false">
                   <elementDefinition Id="502420c0-30ba-44c1-9c3d-97f84081e071" />
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation Id="8295e694-5412-452f-8dec-396308f8b2c2" name="virtual bool eddEdge" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="22cb814e-f5be-488f-92f1-c3cac23aaa82" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="5af11a35-cd47-439d-b8ca-ec022bb590a4" name="Edge&amp; e" direction="In" isUnique="false">
-                  <elementDefinition Id="38e0c477-ba4f-4e03-a24f-17cdfb74636a" />
                 </parameter>
               </operationHasOwnedParameters>
             </ownedParameters>
@@ -392,16 +356,10 @@
     <logicalClassDesignerModelHasTypes>
       <class Id="76edf8cd-699a-4da7-b2ad-dd7d45c32c0a" name="DAG" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="5a9c5db2-0157-455e-bd34-22a1e523a83b" />
-        <suppliersInternal>
-          <interfaceRealization Id="a6a8b24a-9170-4d07-ab65-16f73fb48e3f">
-            <interfaceMoniker Id="42a0d606-58d5-4774-b6b7-008b1296700d" LastKnownName="Lists" />
-            <elementDefinition Id="7763e659-acf8-48f7-bda0-18012aab1c4f" />
-          </interfaceRealization>
-        </suppliersInternal>
         <generalsInternal>
-          <generalization Id="2ab7facf-02cf-4ae3-ad7d-2907f79f550e" isSubstitutable="false">
-            <classMoniker Id="bfe86c2a-a1db-415f-8a14-489fee7d7539" LastKnownName="Graph" />
-            <elementDefinition Id="7ca28987-b95e-4035-b7e1-b89b6e4448f6" />
+          <generalization Id="16ce86a3-c772-42d8-811f-6a25a2656495" isSubstitutable="false">
+            <classMoniker Id="146faf8c-4d6a-4421-8b36-f423606df688" LastKnownName="GraphDirected" />
+            <elementDefinition Id="77e4476a-ccf0-49ef-97e9-f46b511a3689" />
           </generalization>
         </generalsInternal>
         <ownedOperationsInternal>
@@ -431,16 +389,6 @@
               <operationHasOwnedParameters>
                 <parameter Id="1f883de9-ae38-48b1-9474-18b658ab6243" name="Edge&amp; e" direction="In" isUnique="false">
                   <elementDefinition Id="65c41987-5ea0-4e2b-83e4-527db3bd064d" />
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation Id="2cc1531d-a311-4b84-9cbd-3d76a50d2c0c" name="virtual bool eddEdge" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="c54462f5-eaf6-43bf-af2f-bebe96944c56" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="d91d00de-f467-4063-abbd-b86924d6bf43" name="Edge&amp; e" direction="In" isUnique="false">
-                  <elementDefinition Id="fccc3097-6a7f-4981-bd5d-9d163070c458" />
                 </parameter>
               </operationHasOwnedParameters>
             </ownedParameters>
@@ -497,5 +445,19 @@
   </packagedElements>
   <package Id="5c293a91-ce2d-46cf-93df-8cffef2677c5" name="ModelingProject1">
     <elementDefinition Id="c7fab94d-0c96-4aa8-a21d-ac3c62aa6d1a" />
+    <profileInstances>
+      <packageHasProfileInstances Id="835ee1e0-2b4b-45dd-b953-71d6ead1b39e">
+        <profileInstance Id="b9a5fc23-7ab5-4be2-bf5f-60136ca864d0" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="65e216bf-9a68-4014-8e28-4ea03af4dbb6">
+        <profileInstance Id="d03ecf32-7851-4f18-8b03-745c16064515" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
   </package>
 </logicalClassDesignerModel>
