@@ -47,15 +47,15 @@ protected:
 		// remove the edge
 		virtual bool remove(Edge& e) = 0;
 		// returns bool if a vertex exists in a graph.
-		virtual bool search(const Vertex& v) = 0;
+		virtual bool search(Vertex& v) = 0;
 		// returns bool if an Edge exists in a graph.
-		virtual bool search(const Edge& e) = 0;
+		virtual bool search(Edge& e) = 0;
 
 		//README cannot have two overload with the same parameters
 		//here we could not have Vertex search(int) and Edge search(int)
 		// so instead we should do has you said, hence those two functions
-		virtual Vertex* search(int id,const Vertex&) = 0;
-		virtual Edge* search(int weight,const Edge&) = 0;
+		virtual Vertex* search(int id,Vertex&) = 0;
+		virtual Edge* search(int weight,Edge&) = 0;
 
 
 

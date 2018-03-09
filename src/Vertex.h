@@ -20,7 +20,6 @@ public:
 	Vertex(int = 0, int = 0);
 	virtual ~Vertex();
 
-	bool link(const Edge&);
 };
 
 #endif /* VERTEX_H_ */
