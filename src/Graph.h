@@ -51,9 +51,12 @@ protected:
 		// returns bool if an Edge exists in a graph.
 		virtual bool search(const Edge& e) = 0;
 
+		//README cannot have two overload with the same parameters
+		//here we could not have Vertex search(int) and Edge search(int)
+		// so instead we should do has you said, hence those two functions
+		virtual Vertex* search(int id,const Vertex&) = 0;
+		virtual Edge* search(int weight,const Edge&) = 0;
 
-		virtual Vertex* search(int id) = 0;
-		virtual Edge* search(int weight) = 0;
 
 
 
