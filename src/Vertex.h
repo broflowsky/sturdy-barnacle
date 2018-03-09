@@ -20,6 +20,13 @@ public:
 	Vertex(int = 0, int = 0);
 	virtual ~Vertex();
 
+	void setId(int);
+	void setValue(int);
+
+	int getValue()const;
+	int getId()const;
+
+	bool operator==(const Vertex&);
 };
 
 #endif /* VERTEX_H_ */

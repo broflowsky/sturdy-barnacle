@@ -37,10 +37,18 @@ public:
 	// remove the edge
 	virtual bool remove(Edge& e);
 	// returns bool if a vertex exists in a graph.
-	virtual bool search(const Vertex& v);
+
+
+	virtual bool search(Vertex& v);
 	// returns bool if an Edge exists in a graph.
-	virtual bool search(const Edge& e);
+	virtual bool search(Edge& e);
 	// displays the path that contains the vertex.
+
+
+	virtual Vertex* search(int id,Vertex&);
+	virtual Edge* search(int weight,Edge&);
+
+
 	virtual void display(Vertex& v) const;
 	// displays the path that contains the edge.
 	virtual void display(Edge& e) const;

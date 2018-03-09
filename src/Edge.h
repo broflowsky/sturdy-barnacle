@@ -12,13 +12,21 @@ class Vertex;
 
 class Edge {
 
+	int id;
 	int weight;
 	Vertex *vertexStart;
 	Vertex *vertexEnd;
 public:
-	Edge(int = 0, Vertex *start = nullptr, Vertex *end = nullptr);
+	Edge(int = 0,int = 0 , Vertex *start = nullptr, Vertex *end = nullptr);
 	virtual ~Edge();
-	int getWeiht();
+
+	void setWeight(int);
+	void setId(int);
+
+	int getWeight()const;
+	int getId()const;
+
+	bool operator==(const Edge&)const;
 };
 
 #endif /* EDGE_H_ */

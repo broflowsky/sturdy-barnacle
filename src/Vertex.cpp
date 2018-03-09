@@ -16,4 +16,19 @@ Vertex::Vertex(int value, int id){
 Vertex::~Vertex() {
 	// NOTE Auto-generated destructor stub
 }
+void Vertex::setId(int id){
+	this->id =id;
+}
+void Vertex::setValue(int value){
+	this->value =value;
+}
+int Vertex::getId()const{
+	return id;
+}
+int Vertex::getValue()const{
+	return value;
+}
+bool Vertex::operator ==(const Vertex& v){
 
+	return(id == v.getId());
+}
