@@ -47,7 +47,9 @@ public:
 	//remove all the vertices and edges;
 	virtual bool clean();
 	/*NOTE functions that we will need
-	 * link(ge	 *
+	 * link(const Edge &) links an edge to
+	 * link(const Vertex&)
+	 *
 	 * */
 };
 

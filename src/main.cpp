@@ -12,6 +12,6 @@ using namespace std;
 int main(){
 	
 
-	cout<<'y';
+	cout<<'n';
 	return 0;
 }

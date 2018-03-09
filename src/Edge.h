@@ -8,7 +8,8 @@
 #ifndef EDGE_H_
 #define EDGE_H_
 
-#include "Vertex.h"
+class Vertex;
+
 class Edge {
 
 	int weight;
@@ -17,6 +18,8 @@ class Edge {
 public:
 	Edge(int = 0, Vertex *start = nullptr, Vertex *end = nullptr);
 	virtual ~Edge();
+
+	bool link(const Vertex& start, const Vertex& end);
 };
 
 #endif /* EDGE_H_ */

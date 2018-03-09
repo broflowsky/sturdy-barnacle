@@ -8,13 +8,18 @@
 #ifndef VERTEX_H_
 #define VERTEX_H_
 
+#include<list>
+#include "Edge.h"
+
 class Vertex {
 	int value;
 	int id;
-	Edge* edgeArray;
+	std::list<Edge> listEdge;
 public:
 	Vertex(int = 0, int = 0);
 	virtual ~Vertex();
+
+	bool link(const Edge&);
 };
 
 #endif /* VERTEX_H_ */
