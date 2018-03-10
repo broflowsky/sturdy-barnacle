@@ -47,7 +47,8 @@ public:
 
 	virtual bool search(int value,Vertex&);
 	virtual bool search(int weight,Edge&);
-
+	virtual Vertex* searchVertex(int value);
+	virtual Edge* searchEdge(int weight);
 
 	virtual void display(Vertex& v) const;
 	// displays the path that contains the edge.

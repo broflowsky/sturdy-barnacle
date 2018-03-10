@@ -55,23 +55,37 @@ bool GraphDirected::search(int id, Vertex&v){
 			}
 		return false;
 }
+Vertex* GraphDirected::searchVertex(int value){
+	for(list<Vertex>::iterator it = listVertex.begin(); it != listVertex.end();++it)
+		if(it->getValue() == value)
+			return &*it;
+	return nullptr;
+}
+Edge* GraphDirected::searchEdge(int weight){
+	for(list<Edge>::iterator it = listEdge.begin(); it != listEdge.end();++it)
+		if(it->getWeight() == weight)
+			return &*it;
+	return nullptr;
+}
 bool GraphDirected::search(int weight, Edge&){
-
+	//TODO
 }
 void GraphDirected::display(Vertex& v)const{
-
+//TODO
 }
 void GraphDirected::display(Edge& e)const{
-
+	//TODO
 }
 void GraphDirected::display()const{
-
+	//TODO
 }
 string GraphDirected::toString()const{
-
+	//TODO
 }
 Edge& GraphDirected::link(Vertex& start,Vertex& end){
 	Edge* newEdge = new Edge(0,&start,&end);
+	newEdge->setStart(&start);
+	newEdge->setEnd(&end);
 
 	start.add(*newEdge);
 	end.add(*newEdge);

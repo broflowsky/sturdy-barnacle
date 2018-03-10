@@ -30,12 +30,12 @@ void Edge::setWeight(int weight){
 }
 void Edge::setStart(Vertex *start){
 	if(!start)
-		vertexStart = *start;
+		vertexStart = start;
 	else ;//improve
 }
 void Edge::setEnd(Vertex *end){
 	if(!end)
-		vertexEnd = *end;
+		vertexEnd = end;
 	else ;//improve
 }
 
