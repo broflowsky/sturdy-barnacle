@@ -350,6 +350,21 @@
           <operation Id="d56074ae-c887-4400-9028-cb2f46f4d32c" name="virtual string toString" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="83200a7c-b700-4ecc-b8e6-d560ec7b2ae1" />
           </operation>
+          <operation Id="61678954-e3cc-446f-abdc-72623f1d7060" name="virtual bool link" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="f967e1fc-558f-4bfc-8077-b1a42258a02c" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="380e2e86-06e2-4939-b821-c7b5cd25e91e" name="vertex&amp;" direction="In" isUnique="false">
+                  <elementDefinition Id="b90cd098-eb2e-4a09-a4b9-c3e8a1ebb143" />
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="5d3843f5-285f-4d0c-9acb-09da2fee4d2d" name="vertex&amp;" direction="In" isUnique="false">
+                  <elementDefinition Id="62ae9cde-3403-4ddd-8112-27860ab8a5f5" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -438,6 +453,21 @@
           </operation>
           <operation Id="d43da9e2-aea2-4abd-aae1-b730ac029dc5" name="virtual string toString" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="089d3adf-63c7-4910-8bc5-816e2890d599" />
+          </operation>
+          <operation Id="9f31e88b-c58e-4289-872b-0f7c186e1ac1" name="virtual bool link" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="a93405a0-27c4-40cc-a41f-317c8e27a1b1" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="db314342-0097-479a-abb9-0824884ec2fd" name="vertex&amp;" direction="In" isUnique="false">
+                  <elementDefinition Id="304a3f0d-eccb-4bef-847c-1217107b2b98" />
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="4eebe76a-a7a4-462d-bbcf-331eacea3ea4" name="vertex&amp;" direction="In" isUnique="false">
+                  <elementDefinition Id="53d8af76-94dd-4614-bcde-bd6151a15457" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
           </operation>
         </ownedOperationsInternal>
       </class>
