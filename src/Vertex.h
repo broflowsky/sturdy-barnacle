@@ -16,7 +16,6 @@ class Vertex {
 	int value;
 	int id;
 	std::list<Edge> listEdge;
-	//static int id;
 public:
 	Vertex(int = 0);
 	virtual ~Vertex();

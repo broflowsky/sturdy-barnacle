@@ -6,8 +6,10 @@
  */
 
 #include "GraphDirected.h"
+#include "GraphException.h"
 #include <iostream>
 #include <list>
+
 using namespace std;
 
 GraphDirected::GraphDirected(){
@@ -59,16 +61,22 @@ Vertex* GraphDirected::searchVertex(int value){
 	for(list<Vertex>::iterator it = listVertex.begin(); it != listVertex.end();++it)
 		if(it->getValue() == value)
 			return &*it;
-	return nullptr;
+	throw GraphException();//NOTE exception
 }
 Edge* GraphDirected::searchEdge(int weight){
 	for(list<Edge>::iterator it = listEdge.begin(); it != listEdge.end();++it)
 		if(it->getWeight() == weight)
 			return &*it;
-	return nullptr;
+	throw GraphException();
 }
-bool GraphDirected::search(int weight, Edge&){
-	//TODO
+bool GraphDirected::search(int weight, Edge& e){
+	for(list<Edge>::iterator it = listEdge.begin(); it != listEdge.end();++it)
+		if(it->getId() == weight){
+			 e = *it;
+			return true;
+		}
+	return false;
+
 }
 void GraphDirected::display(Vertex& v)const{
 //TODO

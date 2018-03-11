@@ -23,17 +23,23 @@ public:
 
 	//adds one vertex; returns bool if added successfully.
 	virtual bool add(Vertex& v);
+
+	//adds an edge; returns true if the edge is added successfully.
+	virtual bool add(Edge& e);
+
 	//Bonus question: adds in a set of vertices; returns bool if added
 	 //successfully
 	//virtual bool addVertices(Vertex* vArray) = 0;
+
+	//Bonus question: removes a set of edges; as a result, some nodes may remain
+	//as orphan.
+	//virtual bool addEdges(Edge* eArray) = 0;
+
+
 	//removes a vertex; the edges that have connection with this vertex need to
 	 //be removed;
 	virtual bool remove(Vertex& v);
-	//adds an edge; returns true if the edge is added successfully.
-	virtual bool add(Edge& e);
-	//Bonus question: removes a set of edges; as a result, some nodes may remain
-	 //as orphan.
-	//virtual bool addEdges(Edge* eArray) = 0;
+
 	// remove the edge
 	virtual bool remove(Edge& e);
 	// returns bool if a vertex exists in a graph.
@@ -42,17 +48,21 @@ public:
 	virtual bool search(Vertex& v);
 	// returns bool if an Edge exists in a graph.
 	virtual bool search(Edge& e);
-	// displays the path that contains the vertex.
+
 
 
 	virtual bool search(int value,Vertex&);
 	virtual bool search(int weight,Edge&);
+
 	virtual Vertex* searchVertex(int value);
 	virtual Edge* searchEdge(int weight);
 
+	// displays the path that contains the vertex.
 	virtual void display(Vertex& v) const;
+
 	// displays the path that contains the edge.
 	virtual void display(Edge& e) const;
+
 	// displays the whole graph with your own defined format
 	virtual void display() const;
 	 // converts the whole graph to a string such as 1-2-4-5; 1-3-5; each path
@@ -62,11 +72,7 @@ public:
 	virtual bool clean();
 
 
-	/*NOTE functions that we will need
-	 * link(const Edge &) links an edge to
-	 * link(const Vertex&)
-	 *
-	 * */
+
 };
 
 #endif /* GRAPHDIRECTED_H_ */
