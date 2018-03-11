@@ -53,8 +53,14 @@ bool GraphDirected::add(Edge &e){
 	}
 }
 bool GraphDirected::remove(Edge &e){
-	listEdge.remove(e);
-	return true;
+	try{
+		listEdge.remove(e);
+		return true;
+	}
+	catch(...){
+		cerr<<"Edge could not be removed.";
+		return false;
+	}
 }
 bool GraphDirected::search( Vertex& v){
 	for(list<Vertex>::iterator it = listVertex.begin(); it != listVertex.end();++it)
@@ -96,7 +102,6 @@ bool GraphDirected::search(int weight, Edge& e){
 			return true;
 		}
 	return false;
-
 }
 void GraphDirected::display(Vertex& v)const{
 
@@ -105,41 +110,51 @@ void GraphDirected::display(Vertex& v)const{
 	findPath(v,buffer);
 	//NOTE i wanted to make my own streambuf buffer, but...
 
+	//reversing the order of the path and formatting for output
 	for(unsigned int i = 1; i < buffer.size();++i)
 	{
 		if(buffer.at(i) == ';')
 		{
 			for(unsigned int j = i-1; buffer.at(j) != ';'; --j)
-			{
+			{//reversing the paths
 			output+= buffer.at(j);
 			}
-			if(output.at(i-2) != v.getValue()+'0' )
-					output += "-" + to_string(v.getValue()) + ";";
+			if(output.at(i-2) != v.getValue()+'0' ){
+				output += '-';
+				output += v.getValue() + '0';
+				output += ';';
+			}
 			else output+= ";";
 		}
 	}
 	if(!output.size())
-		cout<<"\nThere is no path that leads to that vertex.\n";
-	else cout<<output;
+		cout<<"\nThere is no path that leads to vertex " << v.getValue()<<'.';
+	else cout<<endl<<output;
 }
 void GraphDirected::findPath(Vertex& v, string& buffer)const{
-
-
+	//The path is written from the origin Vertex, going in reverse direction
+	//
 	for(list<Edge>::iterator it = v.getListEdge().begin(); it != v.getListEdge().end(); ++it)
-	{
-
+	{//iterating through all edges of vertex v
 		if(*(it->getEnd()) == v)
-		{
-			buffer += to_string(v.getValue()) + '-';
+		{//testing if iterator is directed toward Vertex v
+
+			//add vertex to path
+			buffer += (v.getValue() + '0');
+			buffer += '-';
+
+			//recursive call
+			//testing if the vertex on the other hand of iterator is part of path
 			findPath(*it->getStart(),buffer);
+
+			//adding missing ';'
 			if(buffer.at(buffer.size()-1) != ';')
 				buffer += ';';
-
 		}
 	}
+	//adding missing Vertex v in buffer
 	if(buffer.at(buffer.size()-1) != ';')
-		buffer += to_string(v.getValue());
-
+		buffer += v.getValue() + '0';
 }
 void GraphDirected::display(Edge& e)const{
 	//TODO
