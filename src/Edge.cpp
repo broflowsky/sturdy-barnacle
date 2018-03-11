@@ -68,8 +68,7 @@ const Edge& Edge::operator=(const Edge& e){
 	delete vertexStart;
 	delete vertexEnd;
 	this->vertexStart = &*(e.vertexStart);
-	this->vertexEnd = &*(e.vertexEnd);
-
+		this->vertexEnd = &*(e.vertexEnd);
 	return *this;
 }
 

@@ -29,7 +29,9 @@ int Vertex::getId()const{
 int Vertex::getValue()const{
 	return value;
 }
-
+std::list<Edge>& Vertex::getListEdge(){
+	return listEdge;
+}
 void Vertex::add( Edge&e){
 	listEdge.push_back(e);
 }

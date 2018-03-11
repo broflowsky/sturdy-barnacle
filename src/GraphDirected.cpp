@@ -7,10 +7,13 @@
 
 #include "GraphDirected.h"
 #include "GraphException.h"
+
 #include <iostream>
 #include <list>
 
-using namespace std;
+using std::cout;
+using std::string;
+using std::list;
 
 GraphDirected::GraphDirected(){
 	std::cout<<"Directed graph created";
@@ -20,17 +23,34 @@ GraphDirected::~GraphDirected() {
 
 }
 bool GraphDirected::add(Vertex &v){
-	listVertex.push_back(v);
-	return true;//fixme
+	try{
+		listVertex.push_back(v);
+		return true;//fixme
+	}
+	catch(...){
+		cerr<<"\nVertex could not be added.\n";
+		return false;
+	}
 }
 bool GraphDirected::remove(Vertex &v){
-	listVertex.remove(v);
-	return true;//FIXme
+	try{
+		listVertex.remove(v);
+		return true;//FIXme
+	}
+	catch(...){
+		std::cerr<<"\nVertex could not be removed.\n";
+		return false;
+	}
 }
 bool GraphDirected::add(Edge &e){
-
-	listEdge.push_back(e);
-	return true; //fixme
+	try{
+		listEdge.push_back(e);
+		return true; //fixme
+	}
+	catch(...){
+		std::cerr<<"\nEdge could not be added.\n";
+		return false;
+	}
 }
 bool GraphDirected::remove(Edge &e){
 	listEdge.remove(e);
@@ -79,16 +99,56 @@ bool GraphDirected::search(int weight, Edge& e){
 
 }
 void GraphDirected::display(Vertex& v)const{
-//TODO
+
+	string buffer = ";";
+	string output = "";
+	findPath(v,buffer);
+	//NOTE i wanted to make my own streambuf buffer, but...
+
+	for(unsigned int i = 1; i < buffer.size();++i)
+	{
+		if(buffer.at(i) == ';')
+		{
+			for(unsigned int j = i-1; buffer.at(j) != ';'; --j)
+			{
+			output+= buffer.at(j);
+			}
+			if(output.at(i-2) != v.getValue()+'0' )
+					output += "-" + to_string(v.getValue()) + ";";
+			else output+= ";";
+		}
+	}
+	if(!output.size())
+		cout<<"\nThere is no path that leads to that vertex.\n";
+	else cout<<output;
+}
+void GraphDirected::findPath(Vertex& v, string& buffer)const{
+
+
+	for(list<Edge>::iterator it = v.getListEdge().begin(); it != v.getListEdge().end(); ++it)
+	{
+
+		if(*(it->getEnd()) == v)
+		{
+			buffer += to_string(v.getValue()) + '-';
+			findPath(*it->getStart(),buffer);
+			if(buffer.at(buffer.size()-1) != ';')
+				buffer += ';';
+
+		}
+	}
+	if(buffer.at(buffer.size()-1) != ';')
+		buffer += to_string(v.getValue());
+
 }
 void GraphDirected::display(Edge& e)const{
 	//TODO
 }
 void GraphDirected::display()const{
-	//TODO
+
 }
 string GraphDirected::toString()const{
-	//TODO
+	return "fuck";
 }
 Edge& GraphDirected::link(Vertex& start,Vertex& end){
 	Edge* newEdge = new Edge(0,&start,&end);

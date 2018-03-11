@@ -57,6 +57,9 @@ public:
 	virtual Vertex* searchVertex(int value);
 	virtual Edge* searchEdge(int weight);
 
+
+	void findPath(Vertex&,string&)const;
+
 	// displays the path that contains the vertex.
 	virtual void display(Vertex& v) const;
 

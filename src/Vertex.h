@@ -29,6 +29,8 @@ public:
 	void add( Edge&);
 	void remove( Edge&);
 
+	std::list<Edge>& getListEdge();
+
 	bool operator==(const Vertex&);
 	const Vertex& operator=(const Vertex&);
 };

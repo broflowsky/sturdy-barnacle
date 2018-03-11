@@ -18,9 +18,6 @@ public:
 	GraphException();
 	string what();
 
-
-
-
 };
 
 
