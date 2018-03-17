@@ -9,11 +9,12 @@
 #define GRAPHDIRECTED_H_
 
 #include "Graph.h"
+#include <vector>
 
 class GraphDirected: public Graph {
 public:
 
-	GraphDirected();
+	GraphDirected(Vertex* = nullptr);
 	virtual ~GraphDirected();
 
 
@@ -58,7 +59,7 @@ public:
 	virtual Edge* searchEdge(int weight);
 
 
-	void findPath(Vertex&,string&)const;
+	void findPath(Vertex&,vector<Vertex>&)const;
 
 	// displays the path that contains the vertex.
 	virtual void display(Vertex& v) const;

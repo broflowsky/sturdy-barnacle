@@ -6,17 +6,21 @@
  */
 
 #include "GraphDirected.h"
+
 #include "GraphException.h"
 
 #include <iostream>
 #include <list>
+#include <stdexcept>
+#include <vector>
 
 using std::cout;
 using std::string;
 using std::list;
 
-GraphDirected::GraphDirected(){
-	std::cout<<"Directed graph created";
+GraphDirected::GraphDirected(Vertex* v){
+	std::cout<<"\nDirected graph created.\n";
+	base = v;
 
 }
 GraphDirected::~GraphDirected() {
@@ -24,6 +28,8 @@ GraphDirected::~GraphDirected() {
 }
 bool GraphDirected::add(Vertex &v){
 	try{
+		if(base == nullptr)
+			base = &v;
 		listVertex.push_back(v);
 		return true;//fixme
 	}
@@ -104,63 +110,52 @@ bool GraphDirected::search(int weight, Edge& e){
 	return false;
 }
 void GraphDirected::display(Vertex& v)const{
+	//finds the shortest path to vertex
 
-	string buffer = ";";
-	string output = "";
-	findPath(v,buffer);
-	//NOTE i wanted to make my own streambuf buffer, but...
+	vector<Vertex> path;
+	findPath(v,path);
+	cout<<'\n';
+	for(vector<Vertex>::iterator it = path.begin(); it != path.end();++it)
+		cout<<it->getId()<<'\0';
 
-	//reversing the order of the path and formatting for output
-	for(unsigned int i = 1; i < buffer.size();++i)
-	{
-		if(buffer.at(i) == ';')
-		{
-			for(unsigned int j = i-1; buffer.at(j) != ';'; --j)
-			{//reversing the paths
-			output+= buffer.at(j);
-			}
-			if(output.at(i-2) != v.getValue()+'0' ){
-				output += '-';
-				output += v.getValue() + '0';
-				output += ';';
-			}
-			else output+= ";";
-		}
-	}
-	if(!output.size())
-		cout<<"\nThere is no path that leads to vertex " << v.getValue()<<'.';
-	else cout<<endl<<output;
 }
-void GraphDirected::findPath(Vertex& v, string& buffer)const{
-	//The path is written from the origin Vertex, going in reverse direction
+void GraphDirected::findPath(Vertex& v, vector<Vertex>& buffer)const{
+	//The path is written from the destination Vertex, going in reverse direction
 	//
-	for(list<Edge>::iterator it = v.getListEdge().begin(); it != v.getListEdge().end(); ++it)
-	{//iterating through all edges of vertex v
-		if(*(it->getEnd()) == v)
-		{//testing if iterator is directed toward Vertex v
+	v.setVisited(true);
+	if(v == *base)
+		buffer.push_back(*base);
+	else
+	{
+		for(list<Edge>::iterator it = v.getListEdge().begin(); it != v.getListEdge().end(); ++it)
+		{//iterating through all edges of vertex v
+			if(*(it->getEnd()) == v && it->getStart()->isVisited() == false)
+			{//testing if iterator is directed toward Vertex v
 
-			//add vertex to path
-			buffer += (v.getValue() + '0');
-			buffer += '-';
+				//add vertex to path
+				buffer.push_back(v);
 
-			//recursive call
-			//testing if the vertex on the other hand of iterator is part of path
-			findPath(*it->getStart(),buffer);
-
-			//adding missing ';'
-			if(buffer.at(buffer.size()-1) != ';')
-				buffer += ';';
+				//recursive call
+				//testing if the vertex on the other hand of iterator is part of path
+				findPath(*it->getStart(),buffer);
+			}
 		}
+		if(buffer.back() != *base)
+			buffer.pop_back();
+
 	}
-	//adding missing Vertex v in buffer
-	if(buffer.at(buffer.size()-1) != ';')
-		buffer += v.getValue() + '0';
+	v.setVisited(false);
+
+}
+
+void GraphDirected::display()const{
+
+
+
+
 }
 void GraphDirected::display(Edge& e)const{
 	//TODO
-}
-void GraphDirected::display()const{
-
 }
 string GraphDirected::toString()const{
 	return "fuck";

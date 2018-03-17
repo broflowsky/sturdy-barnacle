@@ -13,6 +13,7 @@
 
 class Vertex {
 	static int counter;
+	bool visited;
 	int value;
 	int id;
 	std::list<Edge> listEdge;
@@ -22,9 +23,13 @@ public:
 
 	void setId(int);
 	void setValue(int);
+	void setVisited(bool);
 
 	int getValue()const;
 	int getId()const;
+	bool isVisited() const {
+		return visited;
+	}
 
 	void add( Edge&);
 	void remove( Edge&);
@@ -32,7 +37,10 @@ public:
 	std::list<Edge>& getListEdge();
 
 	bool operator==(const Vertex&);
+	bool operator!=(const Vertex&);
 	const Vertex& operator=(const Vertex&);
+
+
 };
 
 #endif /* VERTEX_H_ */

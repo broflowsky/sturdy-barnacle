@@ -20,7 +20,7 @@ protected:
 
 	list<Vertex> listVertex;
 	list<Edge> listEdge;
-
+	Vertex* base;
 	public:
 		Graph();
 		virtual ~Graph();
