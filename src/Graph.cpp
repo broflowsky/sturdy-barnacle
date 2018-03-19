@@ -15,4 +15,9 @@ Graph::Graph() {
 Graph::~Graph() {
 	// NOTE Auto-generated destructor stub
 }
-
+unsigned int Graph::getListEdgeSize()const{
+	return listEdge.size();
+}
+unsigned int Graph::getListVertexSize()const{
+	return listVertex.size();
+}

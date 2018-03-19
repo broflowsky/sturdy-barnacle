@@ -89,15 +89,15 @@ bool GraphDirected::search(int id, Vertex&v){
 			}
 		return false;
 }
-Vertex* GraphDirected::searchVertex(int value){
+Vertex* GraphDirected::searchVertex(int id){
 	for(list<Vertex>::iterator it = listVertex.begin(); it != listVertex.end();++it)
-		if(it->getValue() == value)
+		if(it->getId() == id)
 			return &*it;
 	throw GraphException();//NOTE exception
 }
-Edge* GraphDirected::searchEdge(int weight){
+Edge* GraphDirected::searchEdge(int id){
 	for(list<Edge>::iterator it = listEdge.begin(); it != listEdge.end();++it)
-		if(it->getWeight() == weight)
+		if(it->getId() == id)
 			return &*it;
 	throw GraphException();
 }
@@ -115,21 +115,24 @@ void GraphDirected::display(Vertex& v)const{
 	vector<Vertex> path;
 	findPath(v,path);
 	cout<<'\n';
-	for(vector<Vertex>::iterator it = path.begin(); it != path.end();++it)
-		cout<<it->getId()<<'\0';
+	if(path.empty())
+		cout<<"\nNo path leading to vertex "<<v.getId()<<".";
+	else
+		for(vector<Vertex>::reverse_iterator it = path.rbegin(); it != path.rend();++it)
+			cout<<it->getId()<<(it->getId()==v.getId()?';':'-');
 
 }
 void GraphDirected::findPath(Vertex& v, vector<Vertex>& buffer)const{
 	//The path is written from the destination Vertex, going in reverse direction
 	//
-	v.setVisited(true);
-	if(v == *base)
-		buffer.push_back(*base);
-	else
+	if(v == *base)//checking if we reached base
+		buffer.push_back(*base);//add base to path
+	else if(!v.isVisited())//checking if we ve been here before
 	{
+		v.setVisited(true);//setting the vertex as visited
 		for(list<Edge>::iterator it = v.getListEdge().begin(); it != v.getListEdge().end(); ++it)
 		{//iterating through all edges of vertex v
-			if(*(it->getEnd()) == v && it->getStart()->isVisited() == false)
+			if(*(it->getEnd()) == v && !it->getStart()->isVisited() )
 			{//testing if iterator is directed toward Vertex v
 
 				//add vertex to path
@@ -140,22 +143,31 @@ void GraphDirected::findPath(Vertex& v, vector<Vertex>& buffer)const{
 				findPath(*it->getStart(),buffer);
 			}
 		}
-		if(buffer.back() != *base)
+		if(!buffer.empty() && buffer.back() != *base)
 			buffer.pop_back();
 
 	}
 	v.setVisited(false);
 
 }
+void GraphDirected::display(Edge& e)const{
+	//output format
+	//prints the series of vertices from the base vertex to the vertex that Edge e points to
+	vector<Vertex> path;
+	findPath(*e.getStart(),path);
+		cout<<'\n';
+	if(path.empty())
+		cout<<"No path contains Edge "<<e.getId()<<".";
+	else
+		for(vector<Vertex>::reverse_iterator it = path.rbegin(); it != path.rend();++it)
+			cout<<it->getId()<<'-';
 
-void GraphDirected::display()const{
-
-
-
+	if( !path.empty() && path.begin()->getId()== e.getStart()->getId())
+		cout<<e.getEnd()->getId()<<';';
 
 }
-void GraphDirected::display(Edge& e)const{
-	//TODO
+void GraphDirected::display()const{
+//TODO
 }
 string GraphDirected::toString()const{
 	return "fuck";

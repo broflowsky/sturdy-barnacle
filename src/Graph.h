@@ -58,6 +58,8 @@ protected:
 		virtual bool search(int weight,Edge&) = 0;
 
 
+		//README trying out functtion templates for the display functions
+		template<typename T> void display(T&)const;
 
 
 		// displays the path that contains the vertex.
@@ -71,5 +73,9 @@ protected:
 		virtual string toString() const = 0;
 		//remove all the vertices and edges;
 		virtual bool clean() = 0;
+
+		unsigned int getListEdgeSize() const;
+
+	unsigned int getListVertexSize() const;
 };
 #endif /* GRAPH_H_ */

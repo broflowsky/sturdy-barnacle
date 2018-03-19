@@ -10,6 +10,8 @@
 
 #include "Graph.h"
 #include <vector>
+#include <iostream>
+using std::cout;
 
 class GraphDirected: public Graph {
 public:
@@ -58,13 +60,23 @@ public:
 	virtual Vertex* searchVertex(int value);
 	virtual Edge* searchEdge(int weight);
 
-
 	void findPath(Vertex&,vector<Vertex>&)const;
-
 	// displays the path that contains the vertex.
 	virtual void display(Vertex& v) const;
 
 	// displays the path that contains the edge.
+	template<typename T>  void display(T& t)const
+	{//NOTE will figure out where to put the implementation later on
+		vector<T> path;
+		findPath(t,path);
+		cout<<'\n';
+		if(path.empty())
+			cout<<"\nNo path leading to vertex "<<t.getId()<<".";
+		else
+			for(vector<Vertex>::reverse_iterator it = path.rbegin(); it != path.rend();++it)
+				cout<<it->getId()<<(it->getId()==t.getId()?';':'-');
+		cout<<"\n\nUsing Templates!!1\n\n";
+	}
 	virtual void display(Edge& e) const;
 
 	// displays the whole graph with your own defined format
