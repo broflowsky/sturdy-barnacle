@@ -13,7 +13,8 @@
 
 class Vertex {
 	static int counter;
-	bool visited;
+	//bool visited;
+	//NOTE using an array of bool in findPath instead of a bool data member, so we can keep the toString() and display() constant!
 	int value;
 	int id;
 	std::list<Edge> listEdge;
@@ -27,17 +28,13 @@ public:
 
 	int getValue()const;
 	int getId()const;
-	bool isVisited() const {
-		return visited;
-	}
-
 	void add( Edge&);
 	void remove( Edge&);
 
-	std::list<Edge>& getListEdge();
+	const std::list<Edge>& getListEdge()const;
 
-	bool operator==(const Vertex&);
-	bool operator!=(const Vertex&);
+	bool operator==(const Vertex&)const;
+	bool operator!=(const Vertex&)const;
 	const Vertex& operator=(const Vertex&);
 
 

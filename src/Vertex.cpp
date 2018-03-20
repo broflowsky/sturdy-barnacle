@@ -9,7 +9,6 @@
 
 int Vertex::counter = 0;
 Vertex::Vertex(int value){
-	visited = false;
 	this->value=value;
 	this->id=++counter;
 
@@ -24,16 +23,13 @@ void Vertex::setId(int id){
 void Vertex::setValue(int value){
 	this->value =value;
 }
-void Vertex::setVisited(bool vis){
-	visited = vis;
-}
 int Vertex::getId()const{
 	return id;
 }
 int Vertex::getValue()const{
 	return value;
 }
-std::list<Edge>& Vertex::getListEdge(){
+const std::list<Edge>& Vertex::getListEdge()const{
 	return listEdge;
 }
 void Vertex::add( Edge&e){
@@ -42,11 +38,11 @@ void Vertex::add( Edge&e){
 void Vertex::remove( Edge&e){
 	listEdge.remove(e);
 }
-bool Vertex::operator ==(const Vertex& v){
+bool Vertex::operator ==(const Vertex& v)const{
 
 	return(id == v.getId());
 }
-bool Vertex::operator !=(const Vertex& v){
+bool Vertex::operator !=(const Vertex& v)const{
 
 	return!(Vertex::operator ==(v));
 }
