@@ -31,32 +31,68 @@ bool GraphDirected::add(Vertex &v){
 		if(base == nullptr)
 			base = &v;
 		listVertex.push_back(v);
-		return true;//fixme
+
 	}
 	catch(...){
 		cerr<<"\nVertex could not be added.\n";
 		return false;
 	}
+	return true;
 }
 bool GraphDirected::remove(Vertex &v){
 	try{
 		listVertex.remove(v);
-		return true;//FIXme
 	}
 	catch(...){
 		std::cerr<<"\nVertex could not be removed.\n";
 		return false;
 	}
+	return true;
 }
 bool GraphDirected::add(Edge &e){
 	try{
 		listEdge.push_back(e);
-		return true; //fixme
 	}
 	catch(...){
 		std::cerr<<"\nEdge could not be added.\n";
 		return false;
 	}
+	return true;
+}
+bool GraphDirected::add(Edge *e, int size){
+	try{
+		if(!size)
+			throw invalid_argument("Invalid Size");
+		for(int i =0 ; i < size; ++i)
+			listEdge.push_back(e[i]);
+
+	}
+	catch(exception&e){
+		cerr<<e.what();
+	}
+	catch(...){
+		std::cerr<<"\nEdge could not be added.\n";
+		return false;
+	}
+	return true;
+}
+bool GraphDirected::add(Vertex *v, int size){
+	try{
+		if(!size)
+			throw invalid_argument("Invalid Size");
+
+		for(int i =0 ; i < size; ++i)
+			listVertex.push_back(v[i]);
+
+	}
+	catch(exception&e){
+		cerr<<e.what();
+	}
+	catch(...){
+		std::cerr<<"\nEdge could not be added.\n";
+		return false;
+	}
+	return true;
 }
 bool GraphDirected::remove(Edge &e){
 	try{
@@ -184,7 +220,7 @@ void GraphDirected::display()const{
 	cout<<this->toString();
 }
 string GraphDirected::toString()const{
-	string graph = "\nAll Graph Paths\nFormat:\n\tBase Vertex ID - intermediate vertices ID - Destination Vertex ID;\n\t";
+	string graph = "\nAll Graph Paths\n\nFormat:\tBase Vertex ID - intermediate vertices IDs - Destination Vertex ID;\n\n\t";
 
 	for(list<Vertex>::const_iterator it = listVertex.begin(); it !=listVertex.end();++it)
 	{

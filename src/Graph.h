@@ -35,7 +35,7 @@ protected:
 		virtual bool add(Vertex& v)=0;
 		//Bonus question: adds in a set of vertices; returns bool if added
 		 //successfully
-		//virtual bool addVertices(Vertex* vArray) = 0;
+		virtual bool add(Vertex* vArray, int size) = 0;
 		//removes a vertex; the edges that have connection with this vertex need to
 		 //be removed;
 		virtual bool remove(Vertex& v) = 0;
@@ -43,7 +43,7 @@ protected:
 		virtual bool add(Edge& e) = 0;
 		//Bonus question: removes a set of edges; as a result, some nodes may remain
 		 //as orphan.
-		//virtual bool addEdges(Edge* eArray) = 0;
+		virtual bool add(Edge* eArray, int size) = 0;
 		// remove the edge
 		virtual bool remove(Edge& e) = 0;
 		// returns bool if a vertex exists in a graph.

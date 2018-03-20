@@ -48,6 +48,7 @@ bool Vertex::operator !=(const Vertex& v)const{
 }
 const Vertex& Vertex::operator=(const Vertex&v){
 	this->id = v.id;
+	this->listEdge.clear();
 	this->listEdge = v.listEdge;
 	this->value = v.value;
 	return *this;

@@ -33,11 +33,11 @@ public:
 
 	//Bonus question: adds in a set of vertices; returns bool if added
 	 //successfully
-	//virtual bool addVertices(Vertex* vArray) = 0;
+	virtual bool add(Vertex* vArray, int size);
 
 	//Bonus question: removes a set of edges; as a result, some nodes may remain
 	//as orphan.
-	//virtual bool addEdges(Edge* eArray) = 0;
+	virtual bool add(Edge* eArray,int size);
 
 
 	//removes a vertex; the edges that have connection with this vertex need to
