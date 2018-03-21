@@ -267,6 +267,34 @@ bool GraphDirected::clean(){
 		}
 }
 
+GraphDirected GraphDirected::operator=(const GraphDirected & graph) const
+{
+
+	return *new GraphDirected(graph);					//is this it? just create new graph with copy constructor
+}
+
+bool GraphDirected::operator==(GraphDirected & g)
+{
+	if (g.getListEdgeSize() != this->getListEdgeSize() && g.getListVertexSize() != this->getListVertexSize())		//Compare sizes of two lists
+	{
+		return false;
+	}
+	for (size_t i = 1; i < this->getListEdgeSize(); i++)														//Inspect each element in each list
+	{
+			
+		if (this->searchVertex(i)->getValue() != g.searchVertex(i)->getValue())									//Compare values of verties
+			return false;
+		else if (this->searchEdge(i)->getEnd() != g.searchEdge(i)->getEnd())									//Compare end vertices in edges
+			return false;
+		else if (this->searchEdge(i)->getStart() != g.searchEdge(i)->getStart())								//Compare start vertices in edges
+			return false;
+		else if (this->searchEdge(i)->getWeight() != g.searchEdge(i)->getWeight())								//Compare weight of edges
+			return false;
+
+	}
+	return true;																								//If no conflicts were found return true
+}
+
 
 
 

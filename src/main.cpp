@@ -16,15 +16,10 @@ int main(){
 
 	GraphDirected g;
 
-	g.add(*new Vertex(1));
-	g.add(*new Vertex(2));
-	g.add(*new Vertex(3));
-	g.add(*new Vertex(4));
-	g.add(*new Vertex(5));
-	g.add(*new Vertex(6));
-	g.add(*new Vertex(7));
-	g.add(*new Vertex(8));
-	g.add(*new Vertex(9));
+	for (size_t i = 0; i < 9; i++)
+	{
+		g.add(*new Vertex(i+1));
+	}
 
 
 	cout<<"\n\n\n";
@@ -62,6 +57,7 @@ int main(){
 		cout<<g.toString();
 
 	}
+	//Exceptions/////////////
 	catch(char* str){
 		cerr<<str;
 	}
@@ -71,6 +67,8 @@ int main(){
 	catch(...){
 		cerr<<"Unhandled error occured...Bad.";
 	}
+	//end//////
+	cin.get();
 
 return 0;
 }

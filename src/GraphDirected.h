@@ -75,8 +75,21 @@ public:
 	virtual string toString()const;
 	//remove all the vertices and edges;
 	virtual bool clean();
-
-
+	//Operators
+	//=
+	GraphDirected operator=(const GraphDirected &g) const;
+	//==
+	bool operator==(GraphDirected &graph);
+	//++g
+	GraphDirected& operator++();
+	//g++
+	GraphDirected operator++(int);
+	//+
+	GraphDirected operator+();
+	//>
+	bool operator>(const GraphDirected &g);
+	//<<
+	friend ostream& operator<<(ostream&, const GraphDirected&);
 
 };
 
