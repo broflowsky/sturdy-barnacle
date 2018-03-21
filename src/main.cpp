@@ -5,53 +5,91 @@
  *      Author: vpuyf
  */
 
-#include "GraphDirected.h"
+#include "GraphException.h"
 #include <iostream>
 #include <list>
+#include <exception>
+
+#include "GraphDirected.h"
 using namespace std;
 
 int main(){
-	
-	list<Edge*> listGraph;
-	list<Edge*> subset;
+	GraphDirected g;
 
-	Edge *e0 = new Edge(0);
-	Edge *e1 = new Edge(1);
-	Edge *e2 = new Edge(2);
-	Edge *e3 = new Edge(3);
-	Edge *e4 = new Edge(4);
 
-	listGraph.push_back(e0);
-	listGraph.push_back(e1);
-	listGraph.push_back(e2);
-	listGraph.push_back(e3);
-	listGraph.push_back(e4);
 
-	//subset.push_back(*e0);
-	subset.push_back(e1);
-	subset.push_back(e2);
-	subset.push_back(e3);
-	//subset.push_back(*e4);
-
-	for(list<Edge*>::iterator it = listGraph.begin(); it != listGraph.end();++it){
-	cout<<(*it)->getWeiht()<<'\n';
-	}
-	cout<<'\n';
-	for(list<Edge*>::iterator it = subset.begin(); it != subset.end();++it){
-		cout<<(*it)->getWeiht()<<'\n';
-	}
-	list<Edge*>::iterator it = subset.begin();
-
-	++it++;
-	delete e2;
+	g.add(*new Vertex(1));
+	g.add(*new Vertex(2));
+	g.add(*new Vertex(3));
+	g.add(*new Vertex(4));
+	g.add(*new Vertex(5));
+	g.add(*new Vertex(6));
+	g.add(*new Vertex(7));
+	g.add(*new Vertex(8));
+	g.add(*new Vertex(9));
+	for(int i =0; i<10;++i)
+		g.add(*new Vertex(i));
 	cout<<"\n\n\n";
-	for(list<Edge*>::iterator it = listGraph.begin(); it != listGraph.end();++it){
-		cout<<(*it)->getWeiht()<<'\n';
+	try{
+		g.add(g.link(*g.searchVertex(1),*g.searchVertex(2)));
+		g.add(g.link(*g.searchVertex(3),*g.searchVertex(2)));
+		g.add(g.link(*g.searchVertex(2),*g.searchVertex(4)));
+		g.add(g.link(*g.searchVertex(4),*g.searchVertex(3)));
+		g.add(g.link(*g.searchVertex(2),*g.searchVertex(6)));
+		g.add(g.link(*g.searchVertex(6),*g.searchVertex(8)));
+		g.add(g.link(*g.searchVertex(4),*g.searchVertex(5)));
+		g.add(g.link(*g.searchVertex(5),*g.searchVertex(8)));
+		g.add(g.link(*g.searchVertex(9),*g.searchVertex(5)));
+		g.add(g.link(*g.searchVertex(7),*g.searchVertex(7)));
+
+
+		cout<<"\nDisplaying all path that contains a Vertex:\n";
+		for(size_t i = 1; i <= g.getListVertexSize();++i )
+		{
+			cout<<"\nDisplaying path that leads to vertex " <<i<<".";
+			g.display(*g.searchVertex(i));
+			cout<<'\n';
 		}
-		cout<<'\n';
-	for(list<Edge*>::iterator it = subset.begin(); it != subset.end();++it){
-			cout<<(*it)->getWeiht()<<'\n';
+
+
+		cout<<"\n\n\nDisplaying all path that contains an Edge\n";
+
+		for(size_t i = 1; i <= g.getListEdgeSize();++i )
+		{
+			cout<<"\nDisplaying path that contains the Edge " <<i<<".";
+			g.display(*g.searchEdge(i));
+			cout<<'\n';
 		}
-	cout<<"all good";
+
+		cout<<g.toString();
+
+	}
+	catch(char* str){
+		cerr<<str;
+	}
+	catch(GraphException &e){
+		cerr<<e.what();
+	}
+	catch(...){
+		cerr<<"Unhandled error occured...Bad.";
+	}
+
+
 return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
