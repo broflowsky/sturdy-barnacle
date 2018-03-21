@@ -14,7 +14,7 @@ Edge::Edge(int weight, Vertex *vertexStart, Vertex *vertexEnd){
 	this->weight = weight;
 	this->id=++counter;
 	this->vertexStart = vertexStart;
-	this->vertexEnd=vertexEnd;
+	this->vertexEnd = vertexEnd;
 
 }
 
