@@ -8,50 +8,44 @@
 #include "GraphDirected.h"
 #include <iostream>
 #include <list>
+
 using namespace std;
 
 int main(){
 	
-	list<Edge*> listGraph;
-	list<Edge*> subset;
+	GraphDirected *gd = new GraphDirected();
 
-	Edge *e0 = new Edge(0);
-	Edge *e1 = new Edge(1);
-	Edge *e2 = new Edge(2);
-	Edge *e3 = new Edge(3);
-	Edge *e4 = new Edge(4);
-
-	listGraph.push_back(e0);
-	listGraph.push_back(e1);
-	listGraph.push_back(e2);
-	listGraph.push_back(e3);
-	listGraph.push_back(e4);
-
-	//subset.push_back(*e0);
-	subset.push_back(e1);
-	subset.push_back(e2);
-	subset.push_back(e3);
-	//subset.push_back(*e4);
-
-	for(list<Edge*>::iterator it = listGraph.begin(); it != listGraph.end();++it){
-	cout<<(*it)->getWeiht()<<'\n';
+	Vertex *v[5];
+	for (size_t i = 0; i < 5; i++)
+	{
+		v[i] = new Vertex(1);
 	}
-	cout<<'\n';
-	for(list<Edge*>::iterator it = subset.begin(); it != subset.end();++it){
-		cout<<(*it)->getWeiht()<<'\n';
+	
+	for (size_t i = 0; i < 5; i++)
+	{
+		gd->add(*v[i]);
 	}
-	list<Edge*>::iterator it = subset.begin();
-
-	++it++;
-	delete e2;
-	cout<<"\n\n\n";
-	for(list<Edge*>::iterator it = listGraph.begin(); it != listGraph.end();++it){
-		cout<<(*it)->getWeiht()<<'\n';
-		}
-		cout<<'\n';
-	for(list<Edge*>::iterator it = subset.begin(); it != subset.end();++it){
-			cout<<(*it)->getWeiht()<<'\n';
-		}
-	cout<<"all good";
+	
+	//gd->display();
+	Edge *e[6];
+	/*Invard
+	e[0] = new Edge(2, v[1], v[0]);
+	e[1] = new Edge(2, v[2], v[0]);
+	e[2] = new Edge(2, v[3], v[0]);
+	e[3] = new Edge(2, v[4], v[3]);
+	e[4] = new Edge(2, v[5], v[3]);
+	e[5] = new Edge(2, v[6], v[2]);*/
+	/*Outward*/
+	e[0] = new Edge(2, v[0], v[1]);
+	e[1] = new Edge(2, v[0], v[2]);
+	e[2] = new Edge(2, v[0], v[3]);
+	e[3] = new Edge(2, v[3], v[4]);
+	e[4] = new Edge(2, v[3], v[5]);
+	e[5] = new Edge(2, v[2], v[6]);
+	gd->add(*e, 6);
+	gd->display();
+	cout << "\n\n\n";
+	gd->display(*e[4]);
+	cin.get();
 return 0;
 }
