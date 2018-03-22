@@ -267,10 +267,21 @@ bool GraphDirected::clean(){
 		}
 }
 
-GraphDirected GraphDirected::operator=(const GraphDirected & graph) const
+GraphDirected GraphDirected::operator=(const GraphDirected & graph)
 {
+	GraphDirected temp;
 
-	return *new GraphDirected(graph);					//is this it? just create new graph with copy constructor
+	
+	for (list<Vertex>::iterator itr = listVertex.begin(); itr != listVertex.end(); itr++)
+	{
+		temp.add(*itr);
+	}
+	for (list<Edge>::iterator itr = listEdge.begin() = listEdge.begin(); itr != listEdge.end(); itr++)
+	{
+		temp.add(*itr);
+	}
+
+	//return *new GraphDirected(graph);					//is this it? just create new graph with copy constructor
 }
 
 bool GraphDirected::operator==(GraphDirected & g)

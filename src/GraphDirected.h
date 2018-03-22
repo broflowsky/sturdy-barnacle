@@ -77,7 +77,7 @@ public:
 	virtual bool clean();
 	//Operators
 	//=
-	GraphDirected operator=(const GraphDirected &g) const;
+	GraphDirected operator=(const GraphDirected &g);
 	//==
 	bool operator==(GraphDirected &graph);
 	//++g
