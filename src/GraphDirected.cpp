@@ -23,6 +23,12 @@ GraphDirected::GraphDirected(Vertex* v){
 	base = v;
 
 }
+GraphDirected::GraphDirected(const GraphDirected& g){
+	clean();
+	base = g.base;
+	listVertex = g.listVertex;
+	listEdge = g.listEdge;
+}
 GraphDirected::~GraphDirected() {
 
 }
@@ -259,6 +265,7 @@ bool GraphDirected::clean(){
 	try{
 			listEdge.clear();
 			listVertex.clear();
+			delete base;
 			return true;
 		}
 		catch(...){
@@ -267,26 +274,23 @@ bool GraphDirected::clean(){
 		}
 }
 
-GraphDirected GraphDirected::operator=(const GraphDirected & graph)
+GraphDirected& GraphDirected::operator=(GraphDirected & graph)
 {
-	GraphDirected temp;
-
-	
-	for (list<Vertex>::iterator itr = listVertex.begin(); itr != listVertex.end(); itr++)
+	if(this!= &graph)
 	{
-		temp.add(*itr);
-	}
-	for (list<Edge>::iterator itr = listEdge.begin() = listEdge.begin(); itr != listEdge.end(); itr++)
-	{
-		temp.add(*itr);
-	}
+		this->clean();
+		for (list<Vertex>::iterator itr = graph.listVertex.begin(); itr != graph.listVertex.end(); itr++)
+			this->add(*itr);
+		for (list<Edge>::iterator itr = graph.listEdge.begin(); itr != graph.listEdge.end(); itr++)
+			this->add(*itr);
 
-	//return *new GraphDirected(graph);					//is this it? just create new graph with copy constructor
+	}
+	return *this;
 }
 
-bool GraphDirected::operator==(GraphDirected & g)
+bool GraphDirected::operator==(const GraphDirected & g)const
 {
-	if (g.getListEdgeSize() != this->getListEdgeSize() && g.getListVertexSize() != this->getListVertexSize())		//Compare sizes of two lists
+	/*if (g.getListEdgeSize() != this->getListEdgeSize() && g.getListVertexSize() != this->getListVertexSize())		//Compare sizes of two lists
 	{
 		return false;
 	}
@@ -304,6 +308,14 @@ bool GraphDirected::operator==(GraphDirected & g)
 
 	}
 	return true;																								//If no conflicts were found return true
+*/
+	if(g != *this){
+		if(listVertex.size() != g.listVertex.size())
+			return false;
+		else if(0)
+			;
+	}
+	return true;
 }
 
 

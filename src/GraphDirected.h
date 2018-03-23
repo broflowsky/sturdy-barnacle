@@ -18,6 +18,8 @@ public:
 
 	//if no arg provided, first Vertex added becomes the base
 	GraphDirected(Vertex* = nullptr);
+	GraphDirected(const GraphDirected&);
+
 	virtual ~GraphDirected();
 
 
@@ -58,8 +60,8 @@ public:
 	virtual bool search(int value,Vertex&);
 	virtual bool search(int weight,Edge&);
 
-	virtual Vertex* searchVertex(int value);
-	virtual Edge* searchEdge(int weight);
+	virtual Vertex* searchVertex(int value); // cannot be made const
+	virtual Edge* searchEdge(int weight);	// cannot be made const
 
 	void findPath(const Vertex&,vector<Vertex>&,bool*)const;
 	// displays the path that contains the vertex.
@@ -75,11 +77,14 @@ public:
 	virtual string toString()const;
 	//remove all the vertices and edges;
 	virtual bool clean();
+
 	//Operators
 	//=
-	GraphDirected operator=(const GraphDirected &g);
+	GraphDirected& operator=(GraphDirected &g); //cannot be made const
 	//==
-	bool operator==(GraphDirected &graph);
+	bool operator==(const GraphDirected &graph)const;
+	//!=
+	bool operator!=(const GraphDirected&)const;
 	//++g
 	GraphDirected& operator++();
 	//g++
