@@ -13,6 +13,8 @@
 #include <list>
 #include <stdexcept>
 #include <vector>
+#include <sstream>
+#include <string>
 
 using std::cout;
 using std::string;
@@ -26,8 +28,9 @@ GraphDirected::GraphDirected(Vertex* v){
 GraphDirected::GraphDirected(const GraphDirected& g){
 	clean();
 	base = g.base;
-	listVertex = g.listVertex;
-	listEdge = g.listEdge;
+
+	listVertex.insert(listVertex.end(), g.listVertex.begin(), g.listVertex.end());
+	listEdge.insert(listEdge.end(), g.listEdge.begin(),g.listEdge.end());
 }
 GraphDirected::~GraphDirected() {
 
@@ -75,6 +78,7 @@ bool GraphDirected::add(Edge *e, int size){
 	}
 	catch(exception&e){
 		cerr<<e.what();
+		return false;
 	}
 	catch(...){
 		std::cerr<<"\nEdge could not be added.\n";
@@ -93,6 +97,7 @@ bool GraphDirected::add(Vertex *v, int size){
 	}
 	catch(exception&e){
 		cerr<<e.what();
+		return false;
 	}
 	catch(...){
 		std::cerr<<"\nEdge could not be added.\n";
@@ -226,12 +231,14 @@ void GraphDirected::display()const{
 	cout<<this->toString();
 }
 string GraphDirected::toString()const{
-	string graph = "\nAll Graph Paths\n\nFormat:\tBase Vertex ID - intermediate vertices IDs - Destination Vertex ID;\n\n\t";
+
+	stringstream buffer;
+	buffer <<"\nAll Graph Paths\n\nFormat:\tBase Vertex ID - intermediate vertices IDs - Destination Vertex ID;\n\n\t";
 
 	for(list<Vertex>::const_iterator it = listVertex.begin(); it !=listVertex.end();++it)
 	{
-		bool* visited = new bool[this->getListVertexSize()+1];
-		for(unsigned int i = 0; i < this->getListVertexSize()+1;++i )
+		bool* visited = new bool[listVertex.size()+1];
+		for(unsigned int i = 0; i < listVertex.size()+1;++i )
 			visited[i] = false;
 
 		vector<Vertex> path;
@@ -240,17 +247,18 @@ string GraphDirected::toString()const{
 
 		if(!path.empty())
 			for(vector<Vertex>::reverse_iterator r_it = path.rbegin(); r_it != path.rend();++r_it){
-				graph += r_it->getId() + '0';
+				buffer << r_it->getId();
 				if(r_it->getId()==it->getId()){
-					graph += ';';
-					graph += '\n';
-					graph += '\t';
+					buffer << ';';
+					buffer << '\n';
+					buffer << '\t';
 				}
-				else graph+='-';
+				else buffer << '-';
 			}
 		delete visited;
+		visited = nullptr;
 	}
-	return graph;
+	return buffer.str();
 }
 Edge& GraphDirected::link(Vertex& start,Vertex& end){
 	Edge* newEdge = new Edge(0,&start,&end);
@@ -266,6 +274,7 @@ bool GraphDirected::clean(){
 			listEdge.clear();
 			listVertex.clear();
 			delete base;
+			base = nullptr;
 			return true;
 		}
 		catch(...){
@@ -276,14 +285,13 @@ bool GraphDirected::clean(){
 
 GraphDirected& GraphDirected::operator=(GraphDirected & graph)
 {
-	if(this!= &graph)
+	if(*this!= graph)
 	{
 		this->clean();
 		for (list<Vertex>::iterator itr = graph.listVertex.begin(); itr != graph.listVertex.end(); itr++)
 			this->add(*itr);
 		for (list<Edge>::iterator itr = graph.listEdge.begin(); itr != graph.listEdge.end(); itr++)
 			this->add(*itr);
-
 	}
 	return *this;
 }
@@ -357,8 +365,28 @@ GraphDirected GraphDirected::operator++(int value){
 
 
 }
+GraphDirected GraphDirected::operator+(const GraphDirected& g)const{
 
-
+	GraphDirected temp = *this;
+	for(Vertex& v: temp.listVertex)
+		temp.add(v);
+	for(Edge& e: temp.listEdge)
+		temp.add(e);
+	return temp;
+}
+bool GraphDirected::operator >(const GraphDirected& g)const{
+	int sumThis, sum2 = sumThis = 0;
+	for(const Edge& e : listEdge)
+		sumThis += e.getWeight();
+	for(const Edge& e : g.listEdge)
+		sum2 += e.getWeight();
+	return sumThis>sum2;
+}
+ostream& operator<<(ostream& out, const GraphDirected& g){
+	out << "Graph contains "<< g.listVertex.size() <<" vertices and " << g.listEdge.size() << " edges."
+		<< g.toString();
+	return out;
+}
 
 
 

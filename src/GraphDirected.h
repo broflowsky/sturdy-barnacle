@@ -18,7 +18,7 @@ public:
 
 	//if no arg provided, first Vertex added becomes the base
 	GraphDirected(Vertex* = nullptr);
-	GraphDirected(const GraphDirected&);
+	GraphDirected(const GraphDirected&); //
 
 	virtual ~GraphDirected();
 
@@ -90,9 +90,9 @@ public:
 	//g++
 	GraphDirected operator++(int);
 	//+
-	GraphDirected& operator+();
+	GraphDirected operator+(const GraphDirected&)const;
 	//>
-	bool operator>(const GraphDirected &g);
+	bool operator>(const GraphDirected &g)const;
 	//<<
 	friend ostream& operator<<(ostream&, const GraphDirected&);
 
