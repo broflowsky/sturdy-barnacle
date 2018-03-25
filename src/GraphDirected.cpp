@@ -28,7 +28,6 @@ GraphDirected::GraphDirected(Vertex* v){
 GraphDirected::GraphDirected(const GraphDirected& g){
 	clean();
 	base = g.base;
-
 	listVertex.insert(listVertex.end(), g.listVertex.begin(), g.listVertex.end());
 	listEdge.insert(listEdge.end(), g.listEdge.begin(),g.listEdge.end());
 }
@@ -233,6 +232,7 @@ void GraphDirected::display()const{
 string GraphDirected::toString()const{
 
 	stringstream buffer;
+
 	buffer <<"\nAll Graph Paths\n\nFormat:\tBase Vertex ID - intermediate vertices IDs - Destination Vertex ID;\n\n\t";
 
 	for(list<Vertex>::const_iterator it = listVertex.begin(); it !=listVertex.end();++it)
@@ -248,7 +248,7 @@ string GraphDirected::toString()const{
 		if(!path.empty())
 			for(vector<Vertex>::reverse_iterator r_it = path.rbegin(); r_it != path.rend();++r_it){
 				buffer << r_it->getId();
-				if(r_it->getId()==it->getId()){
+				if(r_it->getId() == it->getId()){
 					buffer << ';';
 					buffer << '\n';
 					buffer << '\t';
@@ -258,7 +258,15 @@ string GraphDirected::toString()const{
 		delete visited;
 		visited = nullptr;
 	}
-	return buffer.str();
+	try{
+		string s = buffer.str();
+		cout<<"\n\nhere\n\n"<<flush;
+		return s;
+	}
+	catch(...){
+		cerr<<"Error with stringstream";
+		return "Error with stringstream";
+	}
 }
 Edge& GraphDirected::link(Vertex& start,Vertex& end){
 	Edge* newEdge = new Edge(0,&start,&end);
@@ -298,25 +306,6 @@ GraphDirected& GraphDirected::operator=(GraphDirected & graph)
 
 bool GraphDirected::operator==(const GraphDirected & g)const
 {
-	/*if (g.getListEdgeSize() != this->getListEdgeSize() && g.getListVertexSize() != this->getListVertexSize())		//Compare sizes of two lists
-	{
-		return false;
-	}
-	for (size_t i = 1; i < this->getListEdgeSize(); i++)														//Inspect each element in each list
-	{
-			
-		if (this->searchVertex(i)->getValue() != g.searchVertex(i)->getValue())									//Compare values of verties
-			return false;
-		else if (this->searchEdge(i)->getEnd() != g.searchEdge(i)->getEnd())									//Compare end vertices in edges
-			return false;
-		else if (this->searchEdge(i)->getStart() != g.searchEdge(i)->getStart())								//Compare start vertices in edges
-			return false;
-		else if (this->searchEdge(i)->getWeight() != g.searchEdge(i)->getWeight())								//Compare weight of edges
-			return false;
-
-	}
-	return true;																								//If no conflicts were found return true
-*/
 	if(&g != this)
 	{
 		if(base == g.base)
@@ -383,11 +372,13 @@ bool GraphDirected::operator >(const GraphDirected& g)const{
 	return sumThis>sum2;
 }
 ostream& operator<<(ostream& out, const GraphDirected& g){
-	out << "Graph contains "<< g.listVertex.size() <<" vertices and " << g.listEdge.size() << " edges."
-		<< g.toString();
+	out << "\n##############################################"
+	    << "\nGraph contains "<< g.listVertex.size() <<" vertices and " << g.listEdge.size() << " edges."
+		<< g.toString()
+		<< "\n##############################################";
+
 	return out;
 }
-
 
 
 
