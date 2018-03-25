@@ -21,15 +21,17 @@ using std::string;
 using std::list;
 
 GraphDirected::GraphDirected(Vertex* v){
-	std::cout<<"\nDirected graph created.\n";
 	base = v;
-
 }
 GraphDirected::GraphDirected(const GraphDirected& g){
-	clean();
 	base = g.base;
-	listVertex.insert(listVertex.end(), g.listVertex.begin(), g.listVertex.end());
-	listEdge.insert(listEdge.end(), g.listEdge.begin(),g.listEdge.end());
+	try{
+		listVertex.insert(listVertex.end(), g.listVertex.begin(), g.listVertex.end());
+		listEdge.insert(listEdge.end(), g.listEdge.begin(),g.listEdge.end());
+	}
+	catch(exception &e){
+		cerr<<e.what();
+	}
 }
 GraphDirected::~GraphDirected() {
 
@@ -38,11 +40,12 @@ bool GraphDirected::add(Vertex &v){
 	try{
 		if(base == nullptr)
 			base = &v;
+
 		listVertex.push_back(v);
 
 	}
-	catch(...){
-		cerr<<"\nVertex could not be added.\n";
+	catch(exception& e){
+		cerr<<e.what();
 		return false;
 	}
 	return true;
@@ -51,8 +54,8 @@ bool GraphDirected::remove(Vertex &v){
 	try{
 		listVertex.remove(v);
 	}
-	catch(...){
-		std::cerr<<"\nVertex could not be removed.\n";
+	catch(exception& e){
+		cerr<<e.what();
 		return false;
 	}
 	return true;
@@ -61,8 +64,8 @@ bool GraphDirected::add(Edge &e){
 	try{
 		listEdge.push_back(e);
 	}
-	catch(...){
-		std::cerr<<"\nEdge could not be added.\n";
+	catch(exception& e){
+		cerr<<e.what();
 		return false;
 	}
 	return true;
@@ -77,10 +80,6 @@ bool GraphDirected::add(Edge *e, int size){
 	}
 	catch(exception&e){
 		cerr<<e.what();
-		return false;
-	}
-	catch(...){
-		std::cerr<<"\nEdge could not be added.\n";
 		return false;
 	}
 	return true;
@@ -98,10 +97,6 @@ bool GraphDirected::add(Vertex *v, int size){
 		cerr<<e.what();
 		return false;
 	}
-	catch(...){
-		std::cerr<<"\nEdge could not be added.\n";
-		return false;
-	}
 	return true;
 }
 bool GraphDirected::remove(Edge &e){
@@ -109,8 +104,8 @@ bool GraphDirected::remove(Edge &e){
 		listEdge.remove(e);
 		return true;
 	}
-	catch(...){
-		cerr<<"Edge could not be removed.";
+	catch(exception& e){
+		cerr<<e.what();
 		return false;
 	}
 }
@@ -139,8 +134,8 @@ Vertex& GraphDirected::searchVertex(int id){
 	for(list<Vertex>::iterator it = listVertex.begin(); it != listVertex.end();++it)
 		if(it->getId() == id)
 			return *it;
-
-	throw GraphException();//NOTE exception
+	throw GraphException();
+	//NOTE exception
 }
 Edge* GraphDirected::searchEdge(int id){
 	for(list<Edge>::iterator it = listEdge.begin(); it != listEdge.end();++it)
@@ -161,27 +156,29 @@ void GraphDirected::display(Vertex& v)const{
 	bool* visited = nullptr;
 	do{
 		try{
-
-			visited = new bool[this->getListVertexSize()+1];
-
+			visited = new bool[listVertex.size()];
 		}
 		catch(exception&e){
 			cerr<<e.what();
+			cerr<<listVertex.size();
 		}
 	}while(visited == nullptr);
 
-	for(unsigned int i = 0; i < this->getListVertexSize()+1;++i )
+	for(unsigned int i = 0; i < listVertex.size();++i )
 		visited[i] = false;
 
 	vector<Vertex> path;
+	path.clear();
 
 	findPath(v,path,visited);
 
 	if(path.empty())
 		cout<<"\nNo path leading to vertex "<<v.getId()<<".";
-	else
+	else{
+		cout<<'\n';
 		for(vector<Vertex>::reverse_iterator it = path.rbegin(); it != path.rend();++it)
 			cout<<it->getId()<<(it->getId()==v.getId()?';':'-');
+	}
 }
 void GraphDirected::findPath(const Vertex& v, vector<Vertex>& buffer, bool* visited)const{
 	//The path is written from the destination Vertex, going in reverse direction
@@ -190,14 +187,14 @@ void GraphDirected::findPath(const Vertex& v, vector<Vertex>& buffer, bool* visi
 
 		buffer.push_back(*base);//add base to path
 
-	else if(!visited[v.getId()])//checking if we ve been here before
+	else if(!visited[v.getId()-base->getId()])//checking if we ve been here before
 	{
-		visited[v.getId()]=true;//setting the vertex as visited
+		visited[v.getId()-base->getId()]=true;//setting the vertex as visited
 
 		for(list<Edge>::const_iterator it = v.getListEdge().begin(); it != v.getListEdge().end(); ++it)
 		{//iterating through all edges of vertex v
 
-			if(*(it->getEnd()) == v && !visited[it->getStart()->getId()])
+			if(*(it->getEnd()) == v && !visited[ (it->getStart()->getId()) - base->getId()])
 			{//testing if iterator is directed toward Vertex v
 				//add vertex to path
 				buffer.push_back(v);
@@ -207,11 +204,11 @@ void GraphDirected::findPath(const Vertex& v, vector<Vertex>& buffer, bool* visi
 				findPath(*it->getStart(),buffer,visited);
 			}
 		}
-		if(!buffer.empty() && buffer.back() != *base)//means path does not lead back to base
-
-			buffer.pop_back();
+		if(!buffer.empty())//means path does not lead back to base
+			if(buffer.back() != *base)
+				buffer.pop_back();
 	}
-	visited[v.getId()]=false;//freeing vertex
+	visited[v.getId()-base->getId()]=false;//freeing vertex
 }
 void GraphDirected::display(Edge& e)const{
 	//output format
@@ -239,6 +236,14 @@ void GraphDirected::display(Edge& e)const{
 void GraphDirected::display()const{
 	cout<<toString();
 }
+void GraphDirected::displayEdgeInfo()const{
+	for(const Edge& e : listEdge)
+		cout<<e;
+}
+void GraphDirected::displayVertexInfo()const{
+	for(const Vertex& v : listVertex)
+		cout<<v;
+}
 string GraphDirected::toString()const{
 
 	stringstream buffer;
@@ -247,18 +252,18 @@ string GraphDirected::toString()const{
 
 	for(list<Vertex>::const_iterator it = listVertex.begin(); it !=listVertex.end();++it)
 	{
-		bool* visited = new bool[listVertex.size()+1];
-		for(unsigned int i = 0; i < listVertex.size()+1;++i )
+		bool* visited = new bool[listVertex.size()];
+		for(unsigned int i = 0; i < listVertex.size();++i )
 			visited[i] = false;
 
 		vector<Vertex> path;
+		path.clear();
 
 		findPath(*it,path,visited);
 
 		if(!path.empty())
 			for(vector<Vertex>::reverse_iterator r_it = path.rbegin(); r_it != path.rend();++r_it){
-				//buffer << r_it->getId();
-				buffer << 'a';
+				buffer << r_it->getId();
 				if(r_it->getId() == it->getId()){
 					buffer << ';';
 					buffer << '\n';
@@ -270,17 +275,12 @@ string GraphDirected::toString()const{
 	}
 	try{
 		string s = buffer.str();
-		cout<<"\n\nhere\n\n"<<flush;
 		return s;
 	}
 	catch(...){
 		cerr<<"Error with stringstream";
 		return "Error with stringstream";
 	}
-}
-void GraphDirected::dummy(){
-	for(const Vertex& v : listVertex)
-		cout<< v.getId()<<endl;
 }
 Edge& GraphDirected::link(Vertex& start,Vertex& end){
 	Edge* newEdge = new Edge(0,&start,&end);
@@ -299,21 +299,28 @@ bool GraphDirected::clean(){
 			base = nullptr;
 			return true;
 		}
-		catch(...){
-			cerr<<"Graph could not be cleaned.";
+		catch(exception &e){
+			cerr<<e.what();
 			return false;
 		}
 }
 
-GraphDirected& GraphDirected::operator=(GraphDirected & graph)
+GraphDirected& GraphDirected::operator=(GraphDirected g)
 {
-	if(*this!= graph)
+	if(*this!= g)
 	{
 		this->clean();
-		for (list<Vertex>::iterator itr = graph.listVertex.begin(); itr != graph.listVertex.end(); itr++)
+		for (list<Vertex>::iterator itr = g.listVertex.begin(); itr != g.listVertex.end(); ++itr)
 			this->add(*itr);
-		for (list<Edge>::iterator itr = graph.listEdge.begin(); itr != graph.listEdge.end(); itr++)
+		for (list<Edge>::iterator itr = g.listEdge.begin(); itr != g.listEdge.end(); ++itr)
 			this->add(*itr);
+		/*try{
+				listVertex.insert(listVertex.end(), g.listVertex.begin(), g.listVertex.end());
+				listEdge.insert(listEdge.end(), g.listEdge.begin(),g.listEdge.end());
+			}
+			catch(exception &e){
+				cerr<<e.what();
+			}*/
 	}
 	return *this;
 }
@@ -360,20 +367,17 @@ GraphDirected& GraphDirected::operator++(){
 }
 GraphDirected GraphDirected::operator++(int value){
 
-	GraphDirected temp = *this;
-	if(!temp.listEdge.empty())
-		for(Edge& e : temp.listEdge)
-			++e;
-	return temp;
+
+	return GraphDirected(++(*this));
 
 
 }
-GraphDirected GraphDirected::operator+(const GraphDirected& g)const{
+GraphDirected GraphDirected::operator+(GraphDirected& g){
 
 	GraphDirected temp = *this;
-	for(Vertex& v: temp.listVertex)
+	for( Vertex& v: g.listVertex)
 		temp.add(v);
-	for(Edge& e: temp.listEdge)
+	for( Edge& e: g.listEdge)
 		temp.add(e);
 	return temp;
 }

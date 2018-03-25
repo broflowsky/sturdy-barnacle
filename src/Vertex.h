@@ -10,6 +10,7 @@
 
 #include<list>
 #include "Edge.h"
+#include <iostream>
 
 class Vertex {
 	static int counter;
@@ -36,6 +37,7 @@ public:
 	bool operator==(const Vertex&)const;
 	bool operator!=(const Vertex&)const;
 	const Vertex& operator=(const Vertex&);
+	friend std::ostream& operator<<(std::ostream&, const Vertex&);
 
 
 };

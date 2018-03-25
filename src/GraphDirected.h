@@ -63,10 +63,13 @@ public:
 	virtual Vertex& searchVertex(int value); // cannot be made const
 	virtual Edge* searchEdge(int weight);	// cannot be made const
 
-	void dummy();
 
 	void findPath(const Vertex&,vector<Vertex>&,bool*)const;
 	// displays the path that contains the vertex.
+
+
+	void displayEdgeInfo()const;
+	void displayVertexInfo()const;
 	virtual void display(Vertex& v) const;
 
 	// displays the path that contains the edge.
@@ -82,7 +85,7 @@ public:
 
 	//Operators
 	//=
-	GraphDirected& operator=(GraphDirected &g); //cannot be made const
+	GraphDirected& operator=(GraphDirected g); //cannot be made const
 	//==
 	bool operator==(const GraphDirected &graph)const;
 	//!=
@@ -92,7 +95,7 @@ public:
 	//g++
 	GraphDirected operator++(int);
 	//+
-	GraphDirected operator+(const GraphDirected&)const;
+	GraphDirected operator+(GraphDirected&);
 	//>
 	bool operator>(const GraphDirected &g)const;
 	//<<

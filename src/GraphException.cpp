@@ -10,9 +10,9 @@
 #include <exception>
 using namespace std;
 
-GraphException::GraphException() : exception(){
-
+GraphException::GraphException(string error) : exception(){
+	this->error = error;
 }
 string GraphException::what(){
-	return "\nObject not found. Invalid search input.\n";
+	return error;
 }

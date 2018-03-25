@@ -6,6 +6,8 @@
  */
 
 #include "Vertex.h"
+#include <iostream>
+using std::ostream;
 
 int Vertex::counter = 0;
 Vertex::Vertex(int value){
@@ -53,7 +55,13 @@ const Vertex& Vertex::operator=(const Vertex&v){
 	this->value = v.value;
 	return *this;
 }
+ostream& operator<<(ostream& out, const Vertex& v){
 
+	out << "\nEdge id: " << v.id
+		<< "\nEdge weight: "<< v.value;
+
+	return out;
+}
 
 
 

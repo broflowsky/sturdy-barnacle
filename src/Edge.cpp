@@ -7,6 +7,8 @@
 
 #include "Edge.h"
 #include "Vertex.h"
+#include <iostream>
+using std::ostream;
 
 int Edge::counter=0;
 
@@ -52,15 +54,11 @@ Vertex* Edge::getStart()const{
 Vertex* Edge::getEnd()const{
 	return vertexEnd;
 }
-
-
-
-
 bool Edge::operator==(const Edge& e )const{
 	return this->id == e.id;
 }
 Edge& Edge::operator ++(){
-	weight++;
+	++weight;
 	return *this;
 }
 const Edge& Edge::operator=(const Edge& e){
@@ -75,7 +73,14 @@ const Edge& Edge::operator=(const Edge& e){
 
 	return *this;
 }
+ostream& operator<<(ostream& out, const Edge& e){
 
+	out << "\nEdge id: " << e.id
+		<< "\nEdge weight: "<< e.weight;
+
+
+	return out;
+}
 
 
 

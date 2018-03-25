@@ -14,8 +14,9 @@
 using namespace std;
 
 class GraphException : public exception{
+	string error;
 public:
-	GraphException();
+	GraphException(string = "\nObject not found. Invalid search input.\n");
 	string what();
 
 };
