@@ -60,8 +60,10 @@ public:
 	virtual bool search(int value,Vertex&);
 	virtual bool search(int weight,Edge&);
 
-	virtual Vertex* searchVertex(int value); // cannot be made const
+	virtual Vertex& searchVertex(int value); // cannot be made const
 	virtual Edge* searchEdge(int weight);	// cannot be made const
+
+	void dummy();
 
 	void findPath(const Vertex&,vector<Vertex>&,bool*)const;
 	// displays the path that contains the vertex.

@@ -135,10 +135,11 @@ bool GraphDirected::search(int id, Vertex&v){
 			}
 		return false;
 }
-Vertex* GraphDirected::searchVertex(int id){
+Vertex& GraphDirected::searchVertex(int id){
 	for(list<Vertex>::iterator it = listVertex.begin(); it != listVertex.end();++it)
 		if(it->getId() == id)
-			return &*it;
+			return *it;
+
 	throw GraphException();//NOTE exception
 }
 Edge* GraphDirected::searchEdge(int id){
@@ -157,7 +158,17 @@ bool GraphDirected::search(int weight, Edge& e){
 }
 void GraphDirected::display(Vertex& v)const{
 	//finds the shortest path to vertex
-	bool* visited = new bool[this->getListVertexSize()+1];
+	bool* visited = nullptr;
+	do{
+		try{
+
+			visited = new bool[this->getListVertexSize()+1];
+
+		}
+		catch(exception&e){
+			cerr<<e.what();
+		}
+	}while(visited == nullptr);
 
 	for(unsigned int i = 0; i < this->getListVertexSize()+1;++i )
 		visited[i] = false;
@@ -165,7 +176,6 @@ void GraphDirected::display(Vertex& v)const{
 	vector<Vertex> path;
 
 	findPath(v,path,visited);
-	cout<<'\n';
 
 	if(path.empty())
 		cout<<"\nNo path leading to vertex "<<v.getId()<<".";
@@ -197,7 +207,7 @@ void GraphDirected::findPath(const Vertex& v, vector<Vertex>& buffer, bool* visi
 				findPath(*it->getStart(),buffer,visited);
 			}
 		}
-		if(!buffer.empty() && buffer.back() != *base)
+		if(!buffer.empty() && buffer.back() != *base)//means path does not lead back to base
 
 			buffer.pop_back();
 	}
@@ -227,7 +237,7 @@ void GraphDirected::display(Edge& e)const{
 
 }
 void GraphDirected::display()const{
-	cout<<this->toString();
+	cout<<toString();
 }
 string GraphDirected::toString()const{
 
@@ -247,7 +257,8 @@ string GraphDirected::toString()const{
 
 		if(!path.empty())
 			for(vector<Vertex>::reverse_iterator r_it = path.rbegin(); r_it != path.rend();++r_it){
-				buffer << r_it->getId();
+				//buffer << r_it->getId();
+				buffer << 'a';
 				if(r_it->getId() == it->getId()){
 					buffer << ';';
 					buffer << '\n';
@@ -256,7 +267,6 @@ string GraphDirected::toString()const{
 				else buffer << '-';
 			}
 		delete visited;
-		visited = nullptr;
 	}
 	try{
 		string s = buffer.str();
@@ -267,6 +277,10 @@ string GraphDirected::toString()const{
 		cerr<<"Error with stringstream";
 		return "Error with stringstream";
 	}
+}
+void GraphDirected::dummy(){
+	for(const Vertex& v : listVertex)
+		cout<< v.getId()<<endl;
 }
 Edge& GraphDirected::link(Vertex& start,Vertex& end){
 	Edge* newEdge = new Edge(0,&start,&end);
