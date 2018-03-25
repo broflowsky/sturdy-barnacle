@@ -58,7 +58,10 @@ Vertex* Edge::getEnd()const{
 
 bool Edge::operator==(const Edge& e )const{
 	return this->id == e.id;
-
+}
+Edge& Edge::operator ++(){
+	weight++;
+	return *this;
 }
 const Edge& Edge::operator=(const Edge& e){
 	//NOTE

@@ -90,7 +90,7 @@ public:
 	//g++
 	GraphDirected operator++(int);
 	//+
-	GraphDirected operator+();
+	GraphDirected& operator+();
 	//>
 	bool operator>(const GraphDirected &g);
 	//<<

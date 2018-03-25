@@ -33,6 +33,7 @@ public:
 
 
 	bool operator==(const Edge&)const;
+	Edge& operator++();//++e
 	const Edge& operator=(const Edge&);
 };
 

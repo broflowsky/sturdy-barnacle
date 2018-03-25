@@ -341,6 +341,22 @@ bool GraphDirected::operator==(const GraphDirected & g)const
 bool GraphDirected::operator !=(const GraphDirected& g)const{
 	return !(*this==g);
 }
+GraphDirected& GraphDirected::operator++(){
+	if(!listEdge.empty())
+		for(Edge& e : listEdge)
+			++e;
+	return *this;
+}
+GraphDirected GraphDirected::operator++(int value){
+
+	GraphDirected temp = *this;
+	if(!temp.listEdge.empty())
+		for(Edge& e : temp.listEdge)
+			++e;
+	return temp;
+
+
+}
 
 
 
