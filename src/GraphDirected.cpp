@@ -309,13 +309,37 @@ bool GraphDirected::operator==(const GraphDirected & g)const
 	}
 	return true;																								//If no conflicts were found return true
 */
-	if(g != *this){
-		if(listVertex.size() != g.listVertex.size())
-			return false;
-		else if(0)
-			;
+	if(&g != this)
+	{
+		if(base == g.base)
+		{
+			if(listVertex.size() != g.listVertex.size() || listEdge.size() != g.listEdge.size())
+
+				return false;
+
+			else if(!listVertex.empty() && !listEdge.empty())
+			{
+
+				list<Vertex>::const_iterator v1 = listVertex.begin(), v2 = g.listVertex.begin();
+				list<Edge>::const_iterator e1 = listEdge.begin(), e2 = g.listEdge.begin();
+
+				do
+					if(v1->getValue() != v2->getValue())
+						return false;
+				while(v1++ != listVertex.end() && v2++ != g.listVertex.end());
+
+				do
+					if(e1->getStart() != e2->getStart() || e1->getEnd() != e2->getEnd())
+						return false;
+				while(e1++ != listEdge.end() && e2++ != g.listEdge.end());
+			}
+		}
+		else return false;
 	}
 	return true;
+}
+bool GraphDirected::operator !=(const GraphDirected& g)const{
+	return !(*this==g);
 }
 
 
