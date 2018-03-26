@@ -14,79 +14,104 @@ using namespace std;
 
 int main(){
 
-	GraphDirected g;
-	GraphDirected g2;
-	GraphDirected g3;
+	GraphDirected graph1;
+	GraphDirected graph2;
+	GraphDirected graph3;
+	GraphDirected graph4;
 
 
 
 	try{
 
 		for (int i = 0; i < 9; ++i)// 9 Vertices added to g, id 1 to 9
-			g.add(*new Vertex(i));//argument is value
+			graph1.add(*new Vertex(i));//argument is value
 
-		for(int i =0; i<9;++i) // 9 Vertices added to g2, id 10 to 18
-			g2.add(*new Vertex(i));
-		//Adding Edges to g
-		g.add(g.link(g.searchVertex(1),g.searchVertex(2)));
-		g.add(g.link(g.searchVertex(3),g.searchVertex(2)));
-		g.add(g.link(g.searchVertex(2),g.searchVertex(4)));
-		g.add(g.link(g.searchVertex(4),g.searchVertex(3)));
-		g.add(g.link(g.searchVertex(2),g.searchVertex(6)));
-		g.add(g.link(g.searchVertex(6),g.searchVertex(8)));
-		g.add(g.link(g.searchVertex(4),g.searchVertex(5)));
-		g.add(g.link(g.searchVertex(5),g.searchVertex(8)));
-		g.add(g.link(g.searchVertex(5),g.searchVertex(9)));
-		g.add(g.link(g.searchVertex(7),g.searchVertex(7)));//link to itself -> no path leading to it
-
-
-		//Adding Edges to g2
-		g2.add(g2.link(g2.searchVertex(12),g2.searchVertex(10)));
-		g2.add(g2.link(g2.searchVertex(10),g2.searchVertex(13)));
-		g2.add(g2.link(g2.searchVertex(11),g2.searchVertex(10)));
-		g2.add(g2.link(g2.searchVertex(11),g2.searchVertex(17)));
-		g2.add(g2.link(g2.searchVertex(11),g2.searchVertex(16)));
-		g2.add(g2.link(g2.searchVertex(13),g2.searchVertex(14)));
-		g2.add(g2.link(g2.searchVertex(14),g2.searchVertex(12)));
-		g2.add(g2.link(g2.searchVertex(12),g2.searchVertex(15)));
-		g2.add(g2.link(g2.searchVertex(15),g2.searchVertex(18)));
-		g2.add(g2.link(g2.searchVertex(18),g2.searchVertex(16)));
+		for(int i =0; i<9;++i) // 9 Vertices added to graph2, id 10 to 18
+			graph2.add(*new Vertex(i));
+		//Adding Edges to g   -> 10 Edges added id 1 o 10
+		graph1.add(graph1.link(graph1.searchVertex(1),graph1.searchVertex(2)));
+		graph1.add(graph1.link(graph1.searchVertex(3),graph1.searchVertex(2)));
+		graph1.add(graph1.link(graph1.searchVertex(2),graph1.searchVertex(4)));
+		graph1.add(graph1.link(graph1.searchVertex(4),graph1.searchVertex(3)));
+		graph1.add(graph1.link(graph1.searchVertex(2),graph1.searchVertex(6)));
+		graph1.add(graph1.link(graph1.searchVertex(6),graph1.searchVertex(8)));
+		graph1.add(graph1.link(graph1.searchVertex(4),graph1.searchVertex(5)));
+		graph1.add(graph1.link(graph1.searchVertex(5),graph1.searchVertex(8)));
+		graph1.add(graph1.link(graph1.searchVertex(5),graph1.searchVertex(9)));
+		graph1.add(graph1.link(graph1.searchVertex(7),graph1.searchVertex(7)));//link to itself -> no path leading to it
 
 
-		g3 = g + g2;//since a graph can only have one base, and that a path has to start from the base
-					//there is no path to the vertices from g2, however they exist in g3.listVertex
+		//Adding Edges to graph2  -> 10 Edges added, id 11 to 20
+		graph2.add(graph2.link(graph2.searchVertex(12),graph2.searchVertex(10)));
+		graph2.add(graph2.link(graph2.searchVertex(10),graph2.searchVertex(13)));
+		graph2.add(graph2.link(graph2.searchVertex(10),graph2.searchVertex(11)));
+		graph2.add(graph2.link(graph2.searchVertex(11),graph2.searchVertex(17)));
+		graph2.add(graph2.link(graph2.searchVertex(11),graph2.searchVertex(16)));
+		graph2.add(graph2.link(graph2.searchVertex(13),graph2.searchVertex(14)));
+		graph2.add(graph2.link(graph2.searchVertex(14),graph2.searchVertex(12)));
+		graph2.add(graph2.link(graph2.searchVertex(12),graph2.searchVertex(15)));
+		graph2.add(graph2.link(graph2.searchVertex(15),graph2.searchVertex(18)));
+		graph2.add(graph2.link(graph2.searchVertex(18),graph2.searchVertex(16)));
 
 
 
-		for(unsigned int i = 1; i<g.getListVertexSize()+1;++i){
-			cout<<"\nPaths leading to Vertex "<<i;
-			g.display(g.searchVertex(i));
+		graph3 = graph1 + graph2;//since a graph can only have one base, and that a path has to start from the base
+					//there is no path to the vertices from graph2, however they exist in graph3.listVertex
+
+		graph4 = graph2;
+
+		cout << "\n\n\n" <<"graph1\n"
+			 <<graph1
+			 <<"\n\n\n"<<"graph2\n"
+			 <<graph2
+			 <<"\n\n\n"<<"graph3\n"
+			 <<graph3
+			 <<"\n\n\n";//<<"graph4\n";
+			 //<<graph4;
+
+		//cout<< graph4 crashes the program. bug is in operator<< -> toString() -> findPath() -> somewhere when accessing an array of bool, the index must be either negative or out of bound, but idk how to fix idk why it s happening
+		for(unsigned int i = 1; i<graph1.getListEdgeSize();++i){
+			cout<<"\nPaths that contains Edge "<<i<<" in  Graph g.";
+			graph1.display(*graph1.searchEdge(i));
+		}
+		cout<<"\n\n\n\n";
+
+		for(unsigned int i = 10; i<19;++i){
+			cout<<"\nPaths that contains Edge "<<i<<" in  Graph graph2.";
+			graph2.display(graph2.searchVertex(i));
 		}
 
-		cout<<"\n\n\n"<<g<<"\n\n\n"<<g2<<"\n\n\n"<<g3;
-
-		g.displayEdgeInfo();
+		cout<<"\n\nEdges info in graph1\n";
+		graph1.displayEdgeInfo();
 		cout<<"\n\n\n";
-		g++;
-		g.displayEdgeInfo();
-		++g;
-		cout<<"\n\n\n";
-		g.displayEdgeInfo();
 
-		if(++g > ++g2)
-			cout<<"\n\ng is greater than g2";
-		else cout<<"\n\ng2 is greater than g";
+		graph1++;
+		cout<<"\n\nEdges info in graph1 AFTER graph1++(increased weights)\n";
+		graph1.displayEdgeInfo();
+		cout<<"\n\n\n";
+
+		++graph1;
+		cout<<"\n\nEdges info in ggraph1 AFTER ++graph1(increased weights)\n";
+		graph1.displayEdgeInfo();
+
+		cout<<"\n\nTesting operator> :";
+		if(++graph1 > ++graph2)
+			cout<<"\n\ngraph1 is greater than graph2";
+		else cout<<"\n\ngraph2 is greater than graph1";
+
+		cout<<"\n\n\nTesting operator== :";
+		cout<<"\n\ngraph2 and graph4 are"<<(graph4==graph2?" the same.":" NOT the same.");
 
 	}
 	//Exceptions/////////////
 	catch(GraphException &e){
-			cerr<<e.what();
+		cerr<<e.what();
 	}
 	catch(char* str){
 		cerr<<str;
 	}
 	catch(exception&e){
-		cerr<<e.what();
+		cerr<<"main "<<e.what();
 	}
 	//end//////
 	//cin.get();

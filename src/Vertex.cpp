@@ -42,7 +42,7 @@ void Vertex::remove( Edge&e){
 }
 bool Vertex::operator ==(const Vertex& v)const{
 
-	return(id == v.getId());
+	return(id == v.id);
 }
 bool Vertex::operator !=(const Vertex& v)const{
 
@@ -57,8 +57,8 @@ const Vertex& Vertex::operator=(const Vertex&v){
 }
 ostream& operator<<(ostream& out, const Vertex& v){
 
-	out << "\nEdge id: " << v.id
-		<< "\nEdge weight: "<< v.value;
+	out << "\nVertex id: " << v.id
+		<< "\nVertex value: "<< v.value;
 
 	return out;
 }

@@ -30,7 +30,7 @@ GraphDirected::GraphDirected(const GraphDirected& g){
 		listEdge.insert(listEdge.end(), g.listEdge.begin(),g.listEdge.end());
 	}
 	catch(exception &e){
-		cerr<<e.what();
+		cerr<<"Copy constructor: "<<e.what();
 	}
 }
 GraphDirected::~GraphDirected() {
@@ -44,8 +44,12 @@ bool GraphDirected::add(Vertex &v){
 		listVertex.push_back(v);
 
 	}
+	catch(std::bad_alloc& ba){
+		cerr<<"Caught bad alloc: "<< ba.what();
+		return false;
+	}
 	catch(exception& e){
-		cerr<<e.what();
+		cerr<<"add(Vertex&) "<<e.what();
 		return false;
 	}
 	return true;
@@ -55,7 +59,7 @@ bool GraphDirected::remove(Vertex &v){
 		listVertex.remove(v);
 	}
 	catch(exception& e){
-		cerr<<e.what();
+		cerr<<"remove(Vertex&) "<<e.what();
 		return false;
 	}
 	return true;
@@ -124,7 +128,7 @@ bool GraphDirected::search( Edge& e){
 }
 bool GraphDirected::search(int id, Vertex&v){
 	for(list<Vertex>::iterator it = listVertex.begin(); it != listVertex.end();++it)
-			if(it->getId() == id){
+			if(it->getId() == id  ){
 				 v = *it;
 				return true;
 			}
@@ -132,16 +136,16 @@ bool GraphDirected::search(int id, Vertex&v){
 }
 Vertex& GraphDirected::searchVertex(int id){
 	for(list<Vertex>::iterator it = listVertex.begin(); it != listVertex.end();++it)
-		if(it->getId() == id)
+		if(it->getId() == id )
 			return *it;
-	throw GraphException();
+	throw GraphException("Vertex not found.");
 	//NOTE exception
 }
 Edge* GraphDirected::searchEdge(int id){
 	for(list<Edge>::iterator it = listEdge.begin(); it != listEdge.end();++it)
 		if(it->getId() == id)
 			return &*it;
-	throw GraphException();
+	throw GraphException("Edge not found.");
 }
 bool GraphDirected::search(int weight, Edge& e){
 	for(list<Edge>::iterator it = listEdge.begin(); it != listEdge.end();++it)
@@ -181,20 +185,27 @@ void GraphDirected::display(Vertex& v)const{
 	}
 }
 void GraphDirected::findPath(const Vertex& v, vector<Vertex>& buffer, bool* visited)const{
+
 	//The path is written from the destination Vertex, going in reverse direction
+	try{
+		if(base == nullptr)
+			throw GraphException("invalid base vertex!");
+	}catch(exception&e){
+		cerr<<e.what();
+		throw e;
+	}
 
 	if(v == *base)//checking if we reached base
-
 		buffer.push_back(*base);//add base to path
 
-	else if(!visited[v.getId()-base->getId()])//checking if we ve been here before
+	else if(!visited[v.getId() - base->getId()])//checking if we ve been here before
 	{
-		visited[v.getId()-base->getId()]=true;//setting the vertex as visited
+		visited[v.getId() - base->getId()]=true;//setting the vertex as visited
 
 		for(list<Edge>::const_iterator it = v.getListEdge().begin(); it != v.getListEdge().end(); ++it)
 		{//iterating through all edges of vertex v
 
-			if(*(it->getEnd()) == v && !visited[ (it->getStart()->getId()) - base->getId()])
+			if( *(it->getEnd()) == v && !visited[ (it->getStart()->getId()) - base->getId()])
 			{//testing if iterator is directed toward Vertex v
 				//add vertex to path
 				buffer.push_back(v);
@@ -208,7 +219,10 @@ void GraphDirected::findPath(const Vertex& v, vector<Vertex>& buffer, bool* visi
 			if(buffer.back() != *base)
 				buffer.pop_back();
 	}
-	visited[v.getId()-base->getId()]=false;//freeing vertex
+	visited[v.getId() - base->getId()] = false;//freeing vertex
+
+
+
 }
 void GraphDirected::display(Edge& e)const{
 	//output format
@@ -238,44 +252,73 @@ void GraphDirected::display()const{
 }
 void GraphDirected::displayEdgeInfo()const{
 	for(const Edge& e : listEdge)
-		cout<<e;
+		cout<<'\n'<<e;
 }
 void GraphDirected::displayVertexInfo()const{
+	if(base != nullptr)
+		cout<<"\nBase vertex:\n"<<*base<<'\n';
 	for(const Vertex& v : listVertex)
-		cout<<v;
+	{
+		cout<<"\n##################"<<v;
+		for(const Edge& e : v.getListEdge())
+			cout<<"\n"<<e;
+		cout<<"\n##################";
+	}
 }
 string GraphDirected::toString()const{
-
-	stringstream buffer;
-
-	buffer <<"\nAll Graph Paths\n\nFormat:\tBase Vertex ID - intermediate vertices IDs - Destination Vertex ID;\n\n\t";
-
-	for(list<Vertex>::const_iterator it = listVertex.begin(); it !=listVertex.end();++it)
-	{
-		bool* visited = new bool[listVertex.size()];
-		for(unsigned int i = 0; i < listVertex.size();++i )
-			visited[i] = false;
-
-		vector<Vertex> path;
-		path.clear();
-
-		findPath(*it,path,visited);
-
-		if(!path.empty())
-			for(vector<Vertex>::reverse_iterator r_it = path.rbegin(); r_it != path.rend();++r_it){
-				buffer << r_it->getId();
-				if(r_it->getId() == it->getId()){
-					buffer << ';';
-					buffer << '\n';
-					buffer << '\t';
-				}
-				else buffer << '-';
-			}
-		delete visited;
-	}
 	try{
+		stringstream buffer;
+
+		buffer <<"\nAll Graph Paths\n\nFormat:\tBase Vertex ID - intermediate vertices IDs - Destination Vertex ID;\n\n\t";
+
+		if(listVertex.empty())
+			throw GraphException("listVertex is empty!");
+
+		for(list<Vertex>::const_iterator it = listVertex.begin(); it !=listVertex.end();++it)
+		{
+			bool* visited;
+
+			//try-catch new operator///
+			try{
+				visited = new bool[listVertex.size()];
+			}
+			catch(GraphException& e){
+				throw GraphException("bool array could not be allocated!!");
+			}
+			///////////////////////////
+
+			for(unsigned int i = 0; i < listVertex.size();++i )
+				visited[i] = false;
+
+			vector<Vertex> path;
+			path.clear();
+
+			try{
+				findPath(*it,path,visited);
+			}
+			catch(exception& e){
+				cerr<<"\nerror in findPath\n"<<flush;
+				throw e;
+			}
+			if(!path.empty())
+				for(vector<Vertex>::reverse_iterator r_it = path.rbegin(); r_it != path.rend();++r_it){
+					buffer << r_it->getId();
+					if(r_it->getId() == it->getId()){
+						buffer << ';';
+						buffer << '\n';
+						buffer << '\t';
+					}
+					else buffer << '-';
+				}
+			delete visited;
+		}
+
 		string s = buffer.str();
 		return s;
+	}
+	catch(exception& e){
+		cerr<<"error in toString()\n"<<flush;
+		throw e;
 	}
 	catch(...){
 		cerr<<"Error with stringstream";
@@ -309,51 +352,53 @@ GraphDirected& GraphDirected::operator=(GraphDirected g)
 {
 	if(*this!= g)
 	{
-		this->clean();
-		for (list<Vertex>::iterator itr = g.listVertex.begin(); itr != g.listVertex.end(); ++itr)
-			this->add(*itr);
-		for (list<Edge>::iterator itr = g.listEdge.begin(); itr != g.listEdge.end(); ++itr)
-			this->add(*itr);
-		/*try{
-				listVertex.insert(listVertex.end(), g.listVertex.begin(), g.listVertex.end());
-				listEdge.insert(listEdge.end(), g.listEdge.begin(),g.listEdge.end());
-			}
-			catch(exception &e){
-				cerr<<e.what();
-			}*/
+		clean();
+		listVertex.assign(g.listVertex.begin(),g.listVertex.end());
+		listEdge.assign(g.listEdge.begin(),g.listEdge.end());
+		if(base == nullptr)
+			base = &*(listVertex.begin());
+
+		if(base == nullptr)
+			cerr<<"still nullptr";
 	}
 	return *this;
 }
 
 bool GraphDirected::operator==(const GraphDirected & g)const
 {
-	if(&g != this)
+
+	if(base == g.base)
 	{
-		if(base == g.base)
-		{
-			if(listVertex.size() != g.listVertex.size() || listEdge.size() != g.listEdge.size())
+		if(listVertex.size() != g.listVertex.size() || listEdge.size() != g.listEdge.size()){
 
-				return false;
 
-			else if(!listVertex.empty() && !listEdge.empty())
-			{
-
-				list<Vertex>::const_iterator v1 = listVertex.begin(), v2 = g.listVertex.begin();
-				list<Edge>::const_iterator e1 = listEdge.begin(), e2 = g.listEdge.begin();
-
-				do
-					if(v1->getValue() != v2->getValue())
-						return false;
-				while(v1++ != listVertex.end() && v2++ != g.listVertex.end());
-
-				do
-					if(e1->getStart() != e2->getStart() || e1->getEnd() != e2->getEnd())
-						return false;
-				while(e1++ != listEdge.end() && e2++ != g.listEdge.end());
-			}
+			return false;
 		}
-		else return false;
+
+		else if(!listVertex.empty() && !listEdge.empty())
+		{
+
+			list<Vertex>::const_iterator v1 = listVertex.begin(), v2 = g.listVertex.begin();
+			list<Edge>::const_iterator e1 = listEdge.begin(), e2 = g.listEdge.begin();
+
+			do
+				if(*v1 != *v2){
+
+					return false;
+				}
+			while(v1++ != listVertex.end() && v2++ != g.listVertex.end());
+
+			do
+				if(*e1 != *e2){
+
+					return false;
+				}
+			while(e1++ != listEdge.end() && e2++ != g.listEdge.end());
+		}
 	}
+	else return false;
+
+
 	return true;
 }
 bool GraphDirected::operator !=(const GraphDirected& g)const{
@@ -367,9 +412,7 @@ GraphDirected& GraphDirected::operator++(){
 }
 GraphDirected GraphDirected::operator++(int value){
 
-
 	return GraphDirected(++(*this));
-
 
 }
 GraphDirected GraphDirected::operator+(GraphDirected& g){
@@ -383,6 +426,7 @@ GraphDirected GraphDirected::operator+(GraphDirected& g){
 }
 bool GraphDirected::operator >(const GraphDirected& g)const{
 	int sumThis, sum2 = sumThis = 0;
+
 	for(const Edge& e : listEdge)
 		sumThis += e.getWeight();
 	for(const Edge& e : g.listEdge)
