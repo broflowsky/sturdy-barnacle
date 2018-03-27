@@ -14,14 +14,17 @@ using namespace std;
 
 int main(){
 
-	GraphDirected graph1;
-	GraphDirected graph2;
-	GraphDirected graph3;
-	GraphDirected graph4;
+
 
 
 
 	try{
+
+		GraphDirected graph1;
+		GraphDirected graph2;
+		GraphDirected graph3;
+		GraphDirected graph4;
+
 
 		for (int i = 0; i < 9; ++i)// 9 Vertices added to g, id 1 to 9
 			graph1.add(*new Vertex(i));//argument is value
@@ -56,9 +59,9 @@ int main(){
 
 
 		graph3 = graph1 + graph2;//since a graph can only have one base, and that a path has to start from the base
-					//there is no path to the vertices from graph2, however they exist in graph3.listVertex
-
+								//there is no path to the vertices from graph2, however they exist in graph3.listVertex
 		graph4 = graph2;
+
 
 		cout << "\n\n\n" <<"graph1\n"
 			 <<graph1
@@ -66,10 +69,10 @@ int main(){
 			 <<graph2
 			 <<"\n\n\n"<<"graph3\n"
 			 <<graph3
-			 <<"\n\n\n";//<<"graph4\n";
-			 //<<graph4;
+			 <<"\n\n\n"
+		     <<"graph4\n"
+		     <<graph4;
 
-		//cout<< graph4 crashes the program. bug is in operator<< -> toString() -> findPath() -> somewhere when accessing an array of bool, the index must be either negative or out of bound, but idk how to fix idk why it s happening
 		for(unsigned int i = 1; i<graph1.getListEdgeSize();++i){
 			cout<<"\nPaths that contains Edge "<<i<<" in  Graph g.";
 			graph1.display(*graph1.searchEdge(i));
@@ -100,8 +103,7 @@ int main(){
 		else cout<<"\n\ngraph2 is greater than graph1";
 
 		cout<<"\n\n\nTesting operator== :";
-		cout<<"\n\ngraph2 and graph4 are"<<(graph4==graph2?" the same.":" NOT the same.");
-
+		cout<<"\n\ngraph2 and graph4 are"<<(graph2==graph4?" the same.":" NOT the same.");
 	}
 	//Exceptions/////////////
 	catch(GraphException &e){

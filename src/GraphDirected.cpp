@@ -38,8 +38,10 @@ GraphDirected::~GraphDirected() {
 }
 bool GraphDirected::add(Vertex &v){
 	try{
-		if(base == nullptr)
+		if(base == nullptr){
+			//cerr<<"\nv added";
 			base = &v;
+		}
 
 		listVertex.push_back(v);
 
@@ -353,11 +355,14 @@ GraphDirected& GraphDirected::operator=(GraphDirected g)
 	if(*this!= g)
 	{
 		clean();
-		listVertex.assign(g.listVertex.begin(),g.listVertex.end());
-		listEdge.assign(g.listEdge.begin(),g.listEdge.end());
+	listVertex.assign(g.listVertex.begin(),g.listVertex.end());
+	listEdge.assign(g.listEdge.begin(),g.listEdge.end());
+		/*for(Vertex& v :g.listVertex)
+			add(v);
+		for(Edge& e: g.listEdge)
+			add(e);*/
 		if(base == nullptr)
 			base = &*(listVertex.begin());
-
 		if(base == nullptr)
 			cerr<<"still nullptr";
 	}
@@ -367,7 +372,22 @@ GraphDirected& GraphDirected::operator=(GraphDirected g)
 bool GraphDirected::operator==(const GraphDirected & g)const
 {
 
-	if(base == g.base)
+	//need to check validity before dereferencing
+	if(base == nullptr)
+	{//for some reason that always evaluate to true when called on objects that we know their base are NOT nullptr
+		cerr<<"base is null";
+		if(&*listVertex.begin()== nullptr)
+			cerr<<"\nalso null";
+		return false;
+
+	}
+	if(g.base == nullptr){
+		cerr<<"other.base is null";
+		return false;
+
+	}
+
+	if(*base == *g.base)
 	{
 		if(listVertex.size() != g.listVertex.size() || listEdge.size() != g.listEdge.size()){
 
@@ -383,7 +403,7 @@ bool GraphDirected::operator==(const GraphDirected & g)const
 
 			do
 				if(*v1 != *v2){
-
+					//cerr<<*v1<<"\n\n\n"<<*v2<<"\n\n\n";
 					return false;
 				}
 			while(v1++ != listVertex.end() && v2++ != g.listVertex.end());
@@ -396,8 +416,10 @@ bool GraphDirected::operator==(const GraphDirected & g)const
 			while(e1++ != listEdge.end() && e2++ != g.listEdge.end());
 		}
 	}
-	else return false;
+	else {
 
+		return false;
+	}
 
 	return true;
 }

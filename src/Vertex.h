@@ -21,6 +21,7 @@ class Vertex {
 	std::list<Edge> listEdge;
 public:
 	Vertex(int = 0);
+	Vertex(const Vertex&);
 	virtual ~Vertex();
 
 	void setId(int);

@@ -15,6 +15,11 @@ Vertex::Vertex(int value){
 	this->id=++counter;
 
 }
+Vertex::Vertex(const Vertex& v){
+	id=v.id;
+	value=v.value;
+	listEdge=v.listEdge;
+}
 
 Vertex::~Vertex() {
 	// NOTE Auto-generated destructor stub

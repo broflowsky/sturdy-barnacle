@@ -19,7 +19,12 @@ Edge::Edge(int weight, Vertex *vertexStart, Vertex *vertexEnd){
 	this->vertexEnd = vertexEnd;
 
 }
-
+Edge::Edge(const Edge& e){
+	id=e.id;
+	weight=e.weight;
+	vertexStart=e.vertexStart;
+	vertexEnd=e.vertexEnd;
+}
 Edge::~Edge() {
 	// NOTE Auto-generated destructor stub
 }

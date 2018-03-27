@@ -19,6 +19,7 @@ class Edge {
 	Vertex *vertexEnd;
 public:
 	Edge(int = 0, Vertex *start = nullptr, Vertex *end = nullptr);
+	Edge(const Edge&);
 	virtual ~Edge();
 
 	void setWeight(int);
